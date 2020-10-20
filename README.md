@@ -32,6 +32,6 @@
 
 3.使用Tinkercad进行电路仿真  
 ===================  
-![image]()
+![image(https://github.com/Shockwave202/WorkReport/blob/main/image/tinkercad.png)
                                       完成情况:10%       遇到的问题：
 
