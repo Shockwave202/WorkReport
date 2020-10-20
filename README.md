@@ -9,7 +9,7 @@
 2     熟悉nano,uno开发板的硬件资源       
 -----------------------------------------------------------------
 ![image](https://github.com/Shockwave202/WorkReport/blob/main/image/nano.jpg)
-https://(github.com/Shockwave202/WorkReport/blob/main/image/UNO.jpg)
+![image](https://github.com/Shockwave202/WorkReport/blob/main/image/UNO.jpg)
                                        完成情况:10%       遇到的问题： 
 
 
