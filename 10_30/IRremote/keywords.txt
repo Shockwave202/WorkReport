@@ -1,0 +1,22 @@
+#######################################
+# Syntax Coloring Map For IRremote
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+IRremote	KEYWORD1	
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+attach	KEYWORD2
+enableIRIn	KEYWORD2
+isReady	KEYWORD2
+getResult	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+

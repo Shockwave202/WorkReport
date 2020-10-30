@@ -1,0 +1,22 @@
+#######################################
+# Syntax Coloring Map For Motor(Driven by L9110S)
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Motor	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+attach  KEYWORD2
+rotateClkwise	KEYWORD2
+rotateCounterClkwise	KEYWORD2
+stop	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
