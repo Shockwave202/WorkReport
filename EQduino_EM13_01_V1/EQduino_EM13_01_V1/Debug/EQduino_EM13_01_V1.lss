@@ -1,0 +1,1419 @@
+
+EQduino_EM13_01_V1.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  00000604  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000590  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000016  00800100  00800100  00000604  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000604  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000634  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000098  00000000  00000000  00000674  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   0000143e  00000000  00000000  0000070c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000055e  00000000  00000000  00001b4a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00001398  00000000  00000000  000020a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000000e4  00000000  00000000  00003440  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000f596  00000000  00000000  00003524  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000003fe  00000000  00000000  00012aba  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000058  00000000  00000000  00012eb8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_macro  000035ff  00000000  00000000  00012f10  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	2a c0       	rjmp	.+84     	; 0x56 <__ctors_end>
+   2:	39 c0       	rjmp	.+114    	; 0x76 <__bad_interrupt>
+   4:	38 c0       	rjmp	.+112    	; 0x76 <__bad_interrupt>
+   6:	37 c0       	rjmp	.+110    	; 0x76 <__bad_interrupt>
+   8:	36 c0       	rjmp	.+108    	; 0x76 <__bad_interrupt>
+   a:	35 c0       	rjmp	.+106    	; 0x76 <__bad_interrupt>
+   c:	34 c0       	rjmp	.+104    	; 0x76 <__bad_interrupt>
+   e:	94 c1       	rjmp	.+808    	; 0x338 <__vector_7>
+  10:	32 c0       	rjmp	.+100    	; 0x76 <__bad_interrupt>
+  12:	31 c0       	rjmp	.+98     	; 0x76 <__bad_interrupt>
+  14:	30 c0       	rjmp	.+96     	; 0x76 <__bad_interrupt>
+  16:	2f c0       	rjmp	.+94     	; 0x76 <__bad_interrupt>
+  18:	2e c0       	rjmp	.+92     	; 0x76 <__bad_interrupt>
+  1a:	2d c0       	rjmp	.+90     	; 0x76 <__bad_interrupt>
+  1c:	2c c0       	rjmp	.+88     	; 0x76 <__bad_interrupt>
+  1e:	2b c0       	rjmp	.+86     	; 0x76 <__bad_interrupt>
+  20:	2a c0       	rjmp	.+84     	; 0x76 <__bad_interrupt>
+  22:	29 c0       	rjmp	.+82     	; 0x76 <__bad_interrupt>
+  24:	28 c0       	rjmp	.+80     	; 0x76 <__bad_interrupt>
+  26:	27 c0       	rjmp	.+78     	; 0x76 <__bad_interrupt>
+  28:	26 c0       	rjmp	.+76     	; 0x76 <__bad_interrupt>
+  2a:	25 c0       	rjmp	.+74     	; 0x76 <__bad_interrupt>
+  2c:	24 c0       	rjmp	.+72     	; 0x76 <__bad_interrupt>
+  2e:	23 c0       	rjmp	.+70     	; 0x76 <__bad_interrupt>
+  30:	22 c0       	rjmp	.+68     	; 0x76 <__bad_interrupt>
+  32:	21 c0       	rjmp	.+66     	; 0x76 <__bad_interrupt>
+  34:	0d c1       	rjmp	.+538    	; 0x250 <main+0x64>
+  36:	17 c1       	rjmp	.+558    	; 0x266 <main+0x7a>
+  38:	21 c1       	rjmp	.+578    	; 0x27c <main+0x90>
+  3a:	2b c1       	rjmp	.+598    	; 0x292 <main+0xa6>
+  3c:	6b c1       	rjmp	.+726    	; 0x314 <__stack+0x15>
+  3e:	6a c1       	rjmp	.+724    	; 0x314 <__stack+0x15>
+  40:	69 c1       	rjmp	.+722    	; 0x314 <__stack+0x15>
+  42:	3d c1       	rjmp	.+634    	; 0x2be <main+0xd2>
+  44:	67 c1       	rjmp	.+718    	; 0x314 <__stack+0x15>
+  46:	5c c1       	rjmp	.+696    	; 0x300 <__stack+0x1>
+  48:	45 c1       	rjmp	.+650    	; 0x2d4 <main+0xe8>
+  4a:	64 c1       	rjmp	.+712    	; 0x314 <__stack+0x15>
+  4c:	63 c1       	rjmp	.+710    	; 0x314 <__stack+0x15>
+  4e:	4d c1       	rjmp	.+666    	; 0x2ea <main+0xfe>
+  50:	61 c1       	rjmp	.+706    	; 0x314 <__stack+0x15>
+  52:	60 c1       	rjmp	.+704    	; 0x314 <__stack+0x15>
+  54:	29 c1       	rjmp	.+594    	; 0x2a8 <main+0xbc>
+
+00000056 <__ctors_end>:
+  56:	11 24       	eor	r1, r1
+  58:	1f be       	out	0x3f, r1	; 63
+  5a:	cf ef       	ldi	r28, 0xFF	; 255
+  5c:	d2 e0       	ldi	r29, 0x02	; 2
+  5e:	de bf       	out	0x3e, r29	; 62
+  60:	cd bf       	out	0x3d, r28	; 61
+
+00000062 <__do_clear_bss>:
+  62:	21 e0       	ldi	r18, 0x01	; 1
+  64:	a0 e0       	ldi	r26, 0x00	; 0
+  66:	b1 e0       	ldi	r27, 0x01	; 1
+  68:	01 c0       	rjmp	.+2      	; 0x6c <.do_clear_bss_start>
+
+0000006a <.do_clear_bss_loop>:
+  6a:	1d 92       	st	X+, r1
+
+0000006c <.do_clear_bss_start>:
+  6c:	a6 31       	cpi	r26, 0x16	; 22
+  6e:	b2 07       	cpc	r27, r18
+  70:	e1 f7       	brne	.-8      	; 0x6a <.do_clear_bss_loop>
+  72:	bc d0       	rcall	.+376    	; 0x1ec <main>
+  74:	8b c2       	rjmp	.+1302   	; 0x58c <_exit>
+
+00000076 <__bad_interrupt>:
+  76:	c4 cf       	rjmp	.-120    	; 0x0 <__vectors>
+
+00000078 <board_init>:
+			*((uint8_t *)port + 2) |= pin_mask;
+		} else {
+			*((uint8_t *)port + 2) &= ~pin_mask;
+		}
+
+		*((uint8_t *)port + 1) |= pin_mask;
+  78:	4a b1       	in	r20, 0x0a	; 10
+	/* Select direction and initial pin state */
+	if (flags & IOPORT_DIR_OUTPUT) {
+		if (flags & IOPORT_INIT_HIGH) {
+			*((uint8_t *)port + 2) |= pin_mask;
+		} else {
+			*((uint8_t *)port + 2) &= ~pin_mask;
+  7a:	3b b1       	in	r19, 0x0b	; 11
+  7c:	3f 71       	andi	r19, 0x1F	; 31
+		}
+
+		*((uint8_t *)port + 1) |= pin_mask;
+  7e:	40 6e       	ori	r20, 0xE0	; 224
+	/* Select direction and initial pin state */
+	if (flags & IOPORT_DIR_OUTPUT) {
+		if (flags & IOPORT_INIT_HIGH) {
+			*((uint8_t *)port + 2) |= pin_mask;
+		} else {
+			*((uint8_t *)port + 2) &= ~pin_mask;
+  80:	95 b1       	in	r25, 0x05	; 5
+  82:	9e 7f       	andi	r25, 0xFE	; 254
+		}
+
+		*((uint8_t *)port + 1) |= pin_mask;
+  84:	24 b1       	in	r18, 0x04	; 4
+  86:	29 60       	ori	r18, 0x09	; 9
+	} else {
+		*((uint8_t *)port + 1) &= ~pin_mask;
+  88:	87 b1       	in	r24, 0x07	; 7
+		if (flags & IOPORT_PULL_UP) {
+			*((uint8_t *)port + 2) |= pin_mask;
+  8a:	58 b1       	in	r21, 0x08	; 8
+			*((uint8_t *)port + 2) &= ~pin_mask;
+		}
+
+		*((uint8_t *)port + 1) |= pin_mask;
+	} else {
+		*((uint8_t *)port + 1) &= ~pin_mask;
+  8c:	4b 7e       	andi	r20, 0xEB	; 235
+  8e:	4a b9       	out	0x0a, r20	; 10
+		if (flags & IOPORT_PULL_UP) {
+			*((uint8_t *)port + 2) |= pin_mask;
+  90:	34 61       	ori	r19, 0x14	; 20
+  92:	3b b9       	out	0x0b, r19	; 11
+			*((uint8_t *)port + 2) &= ~pin_mask;
+		}
+
+		*((uint8_t *)port + 1) |= pin_mask;
+	} else {
+		*((uint8_t *)port + 1) &= ~pin_mask;
+  94:	89 7f       	andi	r24, 0xF9	; 249
+  96:	2d 7c       	andi	r18, 0xCD	; 205
+  98:	24 b9       	out	0x04, r18	; 4
+		if (flags & IOPORT_PULL_UP) {
+			*((uint8_t *)port + 2) |= pin_mask;
+  9a:	9a 63       	ori	r25, 0x3A	; 58
+  9c:	95 b9       	out	0x05, r25	; 5
+		port_pin_flags_t flags)
+{
+	/* Select direction and initial pin state */
+	if (flags & IOPORT_DIR_OUTPUT) {
+		if (flags & IOPORT_INIT_HIGH) {
+			*((uint8_t *)port + 2) |= pin_mask;
+  9e:	95 2f       	mov	r25, r21
+  a0:	9e 60       	ori	r25, 0x0E	; 14
+  a2:	98 b9       	out	0x08, r25	; 8
+		} else {
+			*((uint8_t *)port + 2) &= ~pin_mask;
+		}
+
+		*((uint8_t *)port + 1) |= pin_mask;
+  a4:	88 60       	ori	r24, 0x08	; 8
+  a6:	87 b9       	out	0x07, r24	; 7
+  a8:	08 95       	ret
+
+000000aa <motor_rotateClkwise>:
+ * \param: level high/low
+ */
+__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
+		bool level)
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+  aa:	e8 2f       	mov	r30, r24
+  ac:	e6 95       	lsr	r30
+  ae:	e6 95       	lsr	r30
+  b0:	e6 95       	lsr	r30
+ * \param: port number e.g. IOPORT_PORTB
+ */
+__always_inline static PORT_t *arch_ioport_port_to_base(uint8_t port)
+{
+	return (PORT_t *)((uintptr_t)(IOPORT_BASE_ADDRESS +
+	       (port * IOPORT_PORT_OFFSET)));
+  b2:	f0 e0       	ldi	r31, 0x00	; 0
+  b4:	9f 01       	movw	r18, r30
+  b6:	22 0f       	add	r18, r18
+  b8:	33 1f       	adc	r19, r19
+  ba:	e2 0f       	add	r30, r18
+  bc:	f3 1f       	adc	r31, r19
+ * \brief: To get the base address of port number
+ * \param: port number e.g. IOPORT_PORTB
+ */
+__always_inline static PORT_t *arch_ioport_port_to_base(uint8_t port)
+{
+	return (PORT_t *)((uintptr_t)(IOPORT_BASE_ADDRESS +
+  be:	b0 96       	adiw	r30, 0x20	; 32
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+
+	if (level) {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+  c0:	42 81       	ldd	r20, Z+2	; 0x02
+ * \param: pin. the pin number defined by IOPORT_CREATE_PIN
+ */
+__always_inline static ioport_port_mask_t arch_ioport_pin_to_mask
+	(ioport_pin_t pin)
+{
+	return 1U << (pin & 0x07);
+  c2:	87 70       	andi	r24, 0x07	; 7
+  c4:	21 e0       	ldi	r18, 0x01	; 1
+  c6:	30 e0       	ldi	r19, 0x00	; 0
+  c8:	d9 01       	movw	r26, r18
+  ca:	02 c0       	rjmp	.+4      	; 0xd0 <motor_rotateClkwise+0x26>
+  cc:	aa 0f       	add	r26, r26
+  ce:	bb 1f       	adc	r27, r27
+  d0:	8a 95       	dec	r24
+  d2:	e2 f7       	brpl	.-8      	; 0xcc <motor_rotateClkwise+0x22>
+  d4:	cd 01       	movw	r24, r26
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+
+	if (level) {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+  d6:	84 2b       	or	r24, r20
+  d8:	82 83       	std	Z+2, r24	; 0x02
+ * \param: level high/low
+ */
+__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
+		bool level)
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+  da:	e6 2f       	mov	r30, r22
+  dc:	e6 95       	lsr	r30
+  de:	e6 95       	lsr	r30
+  e0:	e6 95       	lsr	r30
+ * \param: port number e.g. IOPORT_PORTB
+ */
+__always_inline static PORT_t *arch_ioport_port_to_base(uint8_t port)
+{
+	return (PORT_t *)((uintptr_t)(IOPORT_BASE_ADDRESS +
+	       (port * IOPORT_PORT_OFFSET)));
+  e2:	f0 e0       	ldi	r31, 0x00	; 0
+  e4:	cf 01       	movw	r24, r30
+  e6:	88 0f       	add	r24, r24
+  e8:	99 1f       	adc	r25, r25
+  ea:	e8 0f       	add	r30, r24
+  ec:	f9 1f       	adc	r31, r25
+ * \brief: To get the base address of port number
+ * \param: port number e.g. IOPORT_PORTB
+ */
+__always_inline static PORT_t *arch_ioport_port_to_base(uint8_t port)
+{
+	return (PORT_t *)((uintptr_t)(IOPORT_BASE_ADDRESS +
+  ee:	b0 96       	adiw	r30, 0x20	; 32
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+					(pin));
+	} else {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  & (~arch_ioport_pin_to_mask
+  f0:	82 81       	ldd	r24, Z+2	; 0x02
+ * \param: pin. the pin number defined by IOPORT_CREATE_PIN
+ */
+__always_inline static ioport_port_mask_t arch_ioport_pin_to_mask
+	(ioport_pin_t pin)
+{
+	return 1U << (pin & 0x07);
+  f2:	67 70       	andi	r22, 0x07	; 7
+  f4:	02 c0       	rjmp	.+4      	; 0xfa <motor_rotateClkwise+0x50>
+  f6:	22 0f       	add	r18, r18
+  f8:	33 1f       	adc	r19, r19
+  fa:	6a 95       	dec	r22
+  fc:	e2 f7       	brpl	.-8      	; 0xf6 <motor_rotateClkwise+0x4c>
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+					(pin));
+	} else {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  & (~arch_ioport_pin_to_mask
+  fe:	20 95       	com	r18
+ 100:	28 23       	and	r18, r24
+ 102:	22 83       	std	Z+2, r18	; 0x02
+ 104:	08 95       	ret
+
+00000106 <motor_rotateCounterClkwise>:
+ * \param: level high/low
+ */
+__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
+		bool level)
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+ 106:	e8 2f       	mov	r30, r24
+ 108:	e6 95       	lsr	r30
+ 10a:	e6 95       	lsr	r30
+ 10c:	e6 95       	lsr	r30
+ * \param: port number e.g. IOPORT_PORTB
+ */
+__always_inline static PORT_t *arch_ioport_port_to_base(uint8_t port)
+{
+	return (PORT_t *)((uintptr_t)(IOPORT_BASE_ADDRESS +
+	       (port * IOPORT_PORT_OFFSET)));
+ 10e:	f0 e0       	ldi	r31, 0x00	; 0
+ 110:	9f 01       	movw	r18, r30
+ 112:	22 0f       	add	r18, r18
+ 114:	33 1f       	adc	r19, r19
+ 116:	e2 0f       	add	r30, r18
+ 118:	f3 1f       	adc	r31, r19
+ * \brief: To get the base address of port number
+ * \param: port number e.g. IOPORT_PORTB
+ */
+__always_inline static PORT_t *arch_ioport_port_to_base(uint8_t port)
+{
+	return (PORT_t *)((uintptr_t)(IOPORT_BASE_ADDRESS +
+ 11a:	b0 96       	adiw	r30, 0x20	; 32
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+					(pin));
+	} else {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  & (~arch_ioport_pin_to_mask
+ 11c:	92 81       	ldd	r25, Z+2	; 0x02
+ * \param: pin. the pin number defined by IOPORT_CREATE_PIN
+ */
+__always_inline static ioport_port_mask_t arch_ioport_pin_to_mask
+	(ioport_pin_t pin)
+{
+	return 1U << (pin & 0x07);
+ 11e:	87 70       	andi	r24, 0x07	; 7
+ 120:	21 e0       	ldi	r18, 0x01	; 1
+ 122:	30 e0       	ldi	r19, 0x00	; 0
+ 124:	a9 01       	movw	r20, r18
+ 126:	02 c0       	rjmp	.+4      	; 0x12c <motor_rotateCounterClkwise+0x26>
+ 128:	44 0f       	add	r20, r20
+ 12a:	55 1f       	adc	r21, r21
+ 12c:	8a 95       	dec	r24
+ 12e:	e2 f7       	brpl	.-8      	; 0x128 <motor_rotateCounterClkwise+0x22>
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+					(pin));
+	} else {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  & (~arch_ioport_pin_to_mask
+ 130:	84 2f       	mov	r24, r20
+ 132:	80 95       	com	r24
+ 134:	89 23       	and	r24, r25
+ 136:	82 83       	std	Z+2, r24	; 0x02
+ * \param: level high/low
+ */
+__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
+		bool level)
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+ 138:	e6 2f       	mov	r30, r22
+ 13a:	e6 95       	lsr	r30
+ 13c:	e6 95       	lsr	r30
+ 13e:	e6 95       	lsr	r30
+ * \param: port number e.g. IOPORT_PORTB
+ */
+__always_inline static PORT_t *arch_ioport_port_to_base(uint8_t port)
+{
+	return (PORT_t *)((uintptr_t)(IOPORT_BASE_ADDRESS +
+	       (port * IOPORT_PORT_OFFSET)));
+ 140:	f0 e0       	ldi	r31, 0x00	; 0
+ 142:	cf 01       	movw	r24, r30
+ 144:	88 0f       	add	r24, r24
+ 146:	99 1f       	adc	r25, r25
+ 148:	e8 0f       	add	r30, r24
+ 14a:	f9 1f       	adc	r31, r25
+ * \brief: To get the base address of port number
+ * \param: port number e.g. IOPORT_PORTB
+ */
+__always_inline static PORT_t *arch_ioport_port_to_base(uint8_t port)
+{
+	return (PORT_t *)((uintptr_t)(IOPORT_BASE_ADDRESS +
+ 14c:	b0 96       	adiw	r30, 0x20	; 32
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+
+	if (level) {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+ 14e:	82 81       	ldd	r24, Z+2	; 0x02
+ * \param: pin. the pin number defined by IOPORT_CREATE_PIN
+ */
+__always_inline static ioport_port_mask_t arch_ioport_pin_to_mask
+	(ioport_pin_t pin)
+{
+	return 1U << (pin & 0x07);
+ 150:	67 70       	andi	r22, 0x07	; 7
+ 152:	02 c0       	rjmp	.+4      	; 0x158 <motor_rotateCounterClkwise+0x52>
+ 154:	22 0f       	add	r18, r18
+ 156:	33 1f       	adc	r19, r19
+ 158:	6a 95       	dec	r22
+ 15a:	e2 f7       	brpl	.-8      	; 0x154 <motor_rotateCounterClkwise+0x4e>
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+
+	if (level) {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+ 15c:	28 2b       	or	r18, r24
+ 15e:	22 83       	std	Z+2, r18	; 0x02
+ 160:	08 95       	ret
+
+00000162 <motor_stop>:
+ * \param: level high/low
+ */
+__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
+		bool level)
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+ 162:	e8 2f       	mov	r30, r24
+ 164:	e6 95       	lsr	r30
+ 166:	e6 95       	lsr	r30
+ 168:	e6 95       	lsr	r30
+ * \param: port number e.g. IOPORT_PORTB
+ */
+__always_inline static PORT_t *arch_ioport_port_to_base(uint8_t port)
+{
+	return (PORT_t *)((uintptr_t)(IOPORT_BASE_ADDRESS +
+	       (port * IOPORT_PORT_OFFSET)));
+ 16a:	f0 e0       	ldi	r31, 0x00	; 0
+ 16c:	9f 01       	movw	r18, r30
+ 16e:	22 0f       	add	r18, r18
+ 170:	33 1f       	adc	r19, r19
+ 172:	e2 0f       	add	r30, r18
+ 174:	f3 1f       	adc	r31, r19
+ * \brief: To get the base address of port number
+ * \param: port number e.g. IOPORT_PORTB
+ */
+__always_inline static PORT_t *arch_ioport_port_to_base(uint8_t port)
+{
+	return (PORT_t *)((uintptr_t)(IOPORT_BASE_ADDRESS +
+ 176:	b0 96       	adiw	r30, 0x20	; 32
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+					(pin));
+	} else {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  & (~arch_ioport_pin_to_mask
+ 178:	92 81       	ldd	r25, Z+2	; 0x02
+ * \param: pin. the pin number defined by IOPORT_CREATE_PIN
+ */
+__always_inline static ioport_port_mask_t arch_ioport_pin_to_mask
+	(ioport_pin_t pin)
+{
+	return 1U << (pin & 0x07);
+ 17a:	87 70       	andi	r24, 0x07	; 7
+ 17c:	21 e0       	ldi	r18, 0x01	; 1
+ 17e:	30 e0       	ldi	r19, 0x00	; 0
+ 180:	a9 01       	movw	r20, r18
+ 182:	02 c0       	rjmp	.+4      	; 0x188 <motor_stop+0x26>
+ 184:	44 0f       	add	r20, r20
+ 186:	55 1f       	adc	r21, r21
+ 188:	8a 95       	dec	r24
+ 18a:	e2 f7       	brpl	.-8      	; 0x184 <motor_stop+0x22>
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+					(pin));
+	} else {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  & (~arch_ioport_pin_to_mask
+ 18c:	84 2f       	mov	r24, r20
+ 18e:	80 95       	com	r24
+ 190:	89 23       	and	r24, r25
+ 192:	82 83       	std	Z+2, r24	; 0x02
+ * \param: level high/low
+ */
+__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
+		bool level)
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+ 194:	e6 2f       	mov	r30, r22
+ 196:	e6 95       	lsr	r30
+ 198:	e6 95       	lsr	r30
+ 19a:	e6 95       	lsr	r30
+ * \param: port number e.g. IOPORT_PORTB
+ */
+__always_inline static PORT_t *arch_ioport_port_to_base(uint8_t port)
+{
+	return (PORT_t *)((uintptr_t)(IOPORT_BASE_ADDRESS +
+	       (port * IOPORT_PORT_OFFSET)));
+ 19c:	f0 e0       	ldi	r31, 0x00	; 0
+ 19e:	cf 01       	movw	r24, r30
+ 1a0:	88 0f       	add	r24, r24
+ 1a2:	99 1f       	adc	r25, r25
+ 1a4:	e8 0f       	add	r30, r24
+ 1a6:	f9 1f       	adc	r31, r25
+ * \brief: To get the base address of port number
+ * \param: port number e.g. IOPORT_PORTB
+ */
+__always_inline static PORT_t *arch_ioport_port_to_base(uint8_t port)
+{
+	return (PORT_t *)((uintptr_t)(IOPORT_BASE_ADDRESS +
+ 1a8:	b0 96       	adiw	r30, 0x20	; 32
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+					(pin));
+	} else {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  & (~arch_ioport_pin_to_mask
+ 1aa:	82 81       	ldd	r24, Z+2	; 0x02
+ * \param: pin. the pin number defined by IOPORT_CREATE_PIN
+ */
+__always_inline static ioport_port_mask_t arch_ioport_pin_to_mask
+	(ioport_pin_t pin)
+{
+	return 1U << (pin & 0x07);
+ 1ac:	67 70       	andi	r22, 0x07	; 7
+ 1ae:	02 c0       	rjmp	.+4      	; 0x1b4 <motor_stop+0x52>
+ 1b0:	22 0f       	add	r18, r18
+ 1b2:	33 1f       	adc	r19, r19
+ 1b4:	6a 95       	dec	r22
+ 1b6:	e2 f7       	brpl	.-8      	; 0x1b0 <motor_stop+0x4e>
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+					(pin));
+	} else {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  & (~arch_ioport_pin_to_mask
+ 1b8:	20 95       	com	r18
+ 1ba:	28 23       	and	r18, r24
+ 1bc:	22 83       	std	Z+2, r18	; 0x02
+ 1be:	08 95       	ret
+
+000001c0 <enableIRIn>:
+void enableIRIn(void)
+{
+    // the interrupt Service Routine fires every 50 uS
+
+    //noInterrupts();
+    cli();
+ 1c0:	f8 94       	cli
+    // Prescale /8 (16M/8 = 0.5 microseconds per tick)
+    // Therefore, the timer interval can range from 0.5 to 128 microseconds
+    // Depending on the reset value (255 to 0)
+
+    //timerConfigForReceive();
+    TCCR2A = _BV(WGM21);
+ 1c2:	82 e0       	ldi	r24, 0x02	; 2
+ 1c4:	80 93 b0 00 	sts	0x00B0, r24
+    TCCR2B = _BV(CS21);
+ 1c8:	80 93 b1 00 	sts	0x00B1, r24
+    //OCR2A = TIMER_COUNT_TOP / 8;
+    OCR2A = 50;
+ 1cc:	92 e3       	ldi	r25, 0x32	; 50
+ 1ce:	90 93 b3 00 	sts	0x00B3, r25
+    TCNT2 = 0;
+ 1d2:	10 92 b2 00 	sts	0x00B2, r1
+
+    // Timer2 Overflow Interrupt Enable
+    TIMER_ENABLE_RECEIVE_INTR;
+ 1d6:	80 93 70 00 	sts	0x0070, r24
+
+    //Clear interrupt flag
+    //TIMER_RESET_INTR_PENDING;
+
+    irparams.state = CAPATURE;
+ 1da:	e0 e0       	ldi	r30, 0x00	; 0
+ 1dc:	f1 e0       	ldi	r31, 0x01	; 1
+ 1de:	10 82       	st	Z, r1
+    irparams.highLevelCounter = 0;
+ 1e0:	11 82       	std	Z+1, r1	; 0x01
+    irparams.lowLevelCounter = 0;
+ 1e2:	12 82       	std	Z+2, r1	; 0x02
+    irparams.startFlag = 0;
+ 1e4:	13 82       	std	Z+3, r1	; 0x03
+    //Some of the params are cleared at the beginning of
+    // each particular stage,no need to initialize all of them.
+    // irparams.endFlag=0;
+    // irparams.code=0;
+    // irparams.bitCount=0;
+    irparams.receivedFlag = 0;
+ 1e6:	17 82       	std	Z+7, r1	; 0x07
+    // irparams.offset=0;
+
+    //interrupts();
+    sei();
+ 1e8:	78 94       	sei
+ 1ea:	08 95       	ret
+
+000001ec <main>:
+extern uint16_t count_1S;
+
+int main(void)
+{
+    /* set board io port */
+    board_init();
+ 1ec:	45 df       	rcall	.-374    	; 0x78 <board_init>
+
+    enableIRIn();
+ 1ee:	e8 df       	rcall	.-48     	; 0x1c0 <enableIRIn>
+    //These variables should be initialized before activate the process.
+    remote_id_setting_counter = 0;
+ 1f0:	10 92 0b 01 	sts	0x010B, r1
+    count_1MS = 0;
+ 1f4:	10 92 09 01 	sts	0x0109, r1
+            //received anything for a long period since last reception,
+            //stop the motor.
+            cmd = code;
+            //Start the counter to monitor the signal,if the signal
+            //lost,stop the motor.
+            remote_signal_countdown = 1;
+ 1f8:	c1 e0       	ldi	r28, 0x01	; 1
+		}else{
+			LED_On(LED0);
+		}*/
+        //	motor_rotateCounterClkwise(MOTOR1_A,MOTOR1_B);
+        //	motor_rotateClkwise(MOTOR2_A,MOTOR2_B);
+        if (recv_flag)
+ 1fa:	80 91 0f 01 	lds	r24, 0x010F
+ 1fe:	88 23       	and	r24, r24
+ 200:	09 f4       	brne	.+2      	; 0x204 <main+0x18>
+ 202:	88 c0       	rjmp	.+272    	; 0x314 <__stack+0x15>
+        {
+            //After querying,this bit should be cleared to
+            //prevent from retriggering.
+            recv_flag = 0;
+ 204:	10 92 0f 01 	sts	0x010F, r1
+            //The motor will run only when receiving the continuous remote
+            //signal,if the remote signal is lost,
+            //that is,the receiver hasn't
+            //received anything for a long period since last reception,
+            //stop the motor.
+            cmd = code;
+ 208:	80 91 14 01 	lds	r24, 0x0114
+ 20c:	80 93 15 01 	sts	0x0115, r24
+            //Start the counter to monitor the signal,if the signal
+            //lost,stop the motor.
+            remote_signal_countdown = 1;
+ 210:	c0 93 10 01 	sts	0x0110, r28
+            count_1S = 0;
+ 214:	10 92 0d 01 	sts	0x010D, r1
+ 218:	10 92 0c 01 	sts	0x010C, r1
+            remote_signal_lost = 0;
+ 21c:	10 92 0e 01 	sts	0x010E, r1
+            //Execute the cmd
+            data_code = cmd & 0x1f;       //Clear the highest 3 bits of the receiving data
+ 220:	e8 2f       	mov	r30, r24
+ 222:	ef 71       	andi	r30, 0x1F	; 31
+ 224:	e0 93 12 01 	sts	0x0112, r30
+            custom_code = cmd >> 5;       //Right shift 5 bits.
+ 228:	82 95       	swap	r24
+ 22a:	86 95       	lsr	r24
+ 22c:	87 70       	andi	r24, 0x07	; 7
+ 22e:	80 93 13 01 	sts	0x0113, r24
+            if (custom_code == remote_id) //Custom code identification
+ 232:	90 91 11 01 	lds	r25, 0x0111
+ 236:	89 13       	cpse	r24, r25
+ 238:	6d c0       	rjmp	.+218    	; 0x314 <__stack+0x15>
+            {
+
+                switch (data_code)
+ 23a:	8e 2f       	mov	r24, r30
+ 23c:	90 e0       	ldi	r25, 0x00	; 0
+ 23e:	fc 01       	movw	r30, r24
+ 240:	3c 97       	sbiw	r30, 0x0c	; 12
+ 242:	e1 31       	cpi	r30, 0x11	; 17
+ 244:	f1 05       	cpc	r31, r1
+ 246:	08 f0       	brcs	.+2      	; 0x24a <main+0x5e>
+ 248:	65 c0       	rjmp	.+202    	; 0x314 <__stack+0x15>
+ 24a:	e6 5e       	subi	r30, 0xE6	; 230
+ 24c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 24e:	09 94       	ijmp
+                case 0x06:
+                case 0x07:
+                    break;
+                case 0x0c: //L up
+
+                    motor_rotateClkwise(MOTOR1_A, MOTOR1_B);
+ 250:	6e e1       	ldi	r22, 0x1E	; 30
+ 252:	70 e0       	ldi	r23, 0x00	; 0
+ 254:	8d e1       	ldi	r24, 0x1D	; 29
+ 256:	90 e0       	ldi	r25, 0x00	; 0
+ 258:	28 df       	rcall	.-432    	; 0xaa <motor_rotateClkwise>
+                    motor_stop(MOTOR2_A, MOTOR2_B);
+ 25a:	68 e0       	ldi	r22, 0x08	; 8
+ 25c:	70 e0       	ldi	r23, 0x00	; 0
+ 25e:	8f e1       	ldi	r24, 0x1F	; 31
+ 260:	90 e0       	ldi	r25, 0x00	; 0
+ 262:	7f df       	rcall	.-258    	; 0x162 <motor_stop>
+
+                    break;
+ 264:	57 c0       	rjmp	.+174    	; 0x314 <__stack+0x15>
+                case 0x0d: //R up
+
+                    motor_stop(MOTOR1_A, MOTOR1_B);
+ 266:	6e e1       	ldi	r22, 0x1E	; 30
+ 268:	70 e0       	ldi	r23, 0x00	; 0
+ 26a:	8d e1       	ldi	r24, 0x1D	; 29
+ 26c:	90 e0       	ldi	r25, 0x00	; 0
+ 26e:	79 df       	rcall	.-270    	; 0x162 <motor_stop>
+                    motor_rotateClkwise(MOTOR2_A, MOTOR2_B);
+ 270:	68 e0       	ldi	r22, 0x08	; 8
+ 272:	70 e0       	ldi	r23, 0x00	; 0
+ 274:	8f e1       	ldi	r24, 0x1F	; 31
+ 276:	90 e0       	ldi	r25, 0x00	; 0
+ 278:	18 df       	rcall	.-464    	; 0xaa <motor_rotateClkwise>
+
+                    break;
+ 27a:	4c c0       	rjmp	.+152    	; 0x314 <__stack+0x15>
+                case 0x0e: //L down
+
+                    motor_rotateCounterClkwise(MOTOR1_A, MOTOR1_B);
+ 27c:	6e e1       	ldi	r22, 0x1E	; 30
+ 27e:	70 e0       	ldi	r23, 0x00	; 0
+ 280:	8d e1       	ldi	r24, 0x1D	; 29
+ 282:	90 e0       	ldi	r25, 0x00	; 0
+ 284:	40 df       	rcall	.-384    	; 0x106 <motor_rotateCounterClkwise>
+                    motor_stop(MOTOR2_A, MOTOR2_B);
+ 286:	68 e0       	ldi	r22, 0x08	; 8
+ 288:	70 e0       	ldi	r23, 0x00	; 0
+ 28a:	8f e1       	ldi	r24, 0x1F	; 31
+ 28c:	90 e0       	ldi	r25, 0x00	; 0
+ 28e:	69 df       	rcall	.-302    	; 0x162 <motor_stop>
+
+                    break;
+ 290:	41 c0       	rjmp	.+130    	; 0x314 <__stack+0x15>
+                case 0x0f: //R down
+
+                    motor_stop(MOTOR1_A, MOTOR1_B);
+ 292:	6e e1       	ldi	r22, 0x1E	; 30
+ 294:	70 e0       	ldi	r23, 0x00	; 0
+ 296:	8d e1       	ldi	r24, 0x1D	; 29
+ 298:	90 e0       	ldi	r25, 0x00	; 0
+ 29a:	63 df       	rcall	.-314    	; 0x162 <motor_stop>
+                    motor_rotateCounterClkwise(MOTOR2_A, MOTOR2_B);
+ 29c:	68 e0       	ldi	r22, 0x08	; 8
+ 29e:	70 e0       	ldi	r23, 0x00	; 0
+ 2a0:	8f e1       	ldi	r24, 0x1F	; 31
+ 2a2:	90 e0       	ldi	r25, 0x00	; 0
+ 2a4:	30 df       	rcall	.-416    	; 0x106 <motor_rotateCounterClkwise>
+
+                    break;
+ 2a6:	36 c0       	rjmp	.+108    	; 0x314 <__stack+0x15>
+                //Combination:
+                case 0x1c: //L_up +R_up
+
+                    motor_rotateClkwise(MOTOR1_A, MOTOR1_B);
+ 2a8:	6e e1       	ldi	r22, 0x1E	; 30
+ 2aa:	70 e0       	ldi	r23, 0x00	; 0
+ 2ac:	8d e1       	ldi	r24, 0x1D	; 29
+ 2ae:	90 e0       	ldi	r25, 0x00	; 0
+ 2b0:	fc de       	rcall	.-520    	; 0xaa <motor_rotateClkwise>
+                    motor_rotateClkwise(MOTOR2_A, MOTOR2_B);
+ 2b2:	68 e0       	ldi	r22, 0x08	; 8
+ 2b4:	70 e0       	ldi	r23, 0x00	; 0
+ 2b6:	8f e1       	ldi	r24, 0x1F	; 31
+ 2b8:	90 e0       	ldi	r25, 0x00	; 0
+ 2ba:	f7 de       	rcall	.-530    	; 0xaa <motor_rotateClkwise>
+
+                    break;
+ 2bc:	2b c0       	rjmp	.+86     	; 0x314 <__stack+0x15>
+                case 0x13: //L_down +R_down
+
+                    motor_rotateCounterClkwise(MOTOR1_A, MOTOR1_B);
+ 2be:	6e e1       	ldi	r22, 0x1E	; 30
+ 2c0:	70 e0       	ldi	r23, 0x00	; 0
+ 2c2:	8d e1       	ldi	r24, 0x1D	; 29
+ 2c4:	90 e0       	ldi	r25, 0x00	; 0
+ 2c6:	1f df       	rcall	.-450    	; 0x106 <motor_rotateCounterClkwise>
+                    motor_rotateCounterClkwise(MOTOR2_A, MOTOR2_B);
+ 2c8:	68 e0       	ldi	r22, 0x08	; 8
+ 2ca:	70 e0       	ldi	r23, 0x00	; 0
+ 2cc:	8f e1       	ldi	r24, 0x1F	; 31
+ 2ce:	90 e0       	ldi	r25, 0x00	; 0
+ 2d0:	1a df       	rcall	.-460    	; 0x106 <motor_rotateCounterClkwise>
+
+                    break;
+ 2d2:	20 c0       	rjmp	.+64     	; 0x314 <__stack+0x15>
+                case 0x16: //L_up +R_down
+
+                    motor_rotateClkwise(MOTOR1_A, MOTOR1_B);
+ 2d4:	6e e1       	ldi	r22, 0x1E	; 30
+ 2d6:	70 e0       	ldi	r23, 0x00	; 0
+ 2d8:	8d e1       	ldi	r24, 0x1D	; 29
+ 2da:	90 e0       	ldi	r25, 0x00	; 0
+ 2dc:	e6 de       	rcall	.-564    	; 0xaa <motor_rotateClkwise>
+                    motor_rotateCounterClkwise(MOTOR2_A, MOTOR2_B);
+ 2de:	68 e0       	ldi	r22, 0x08	; 8
+ 2e0:	70 e0       	ldi	r23, 0x00	; 0
+ 2e2:	8f e1       	ldi	r24, 0x1F	; 31
+ 2e4:	90 e0       	ldi	r25, 0x00	; 0
+ 2e6:	0f df       	rcall	.-482    	; 0x106 <motor_rotateCounterClkwise>
+
+                    break;
+ 2e8:	15 c0       	rjmp	.+42     	; 0x314 <__stack+0x15>
+                case 0x19: //L_down +R_up
+
+                    motor_rotateCounterClkwise(MOTOR1_A, MOTOR1_B);
+ 2ea:	6e e1       	ldi	r22, 0x1E	; 30
+ 2ec:	70 e0       	ldi	r23, 0x00	; 0
+ 2ee:	8d e1       	ldi	r24, 0x1D	; 29
+ 2f0:	90 e0       	ldi	r25, 0x00	; 0
+ 2f2:	09 df       	rcall	.-494    	; 0x106 <motor_rotateCounterClkwise>
+                    motor_rotateClkwise(MOTOR2_A, MOTOR2_B);
+ 2f4:	68 e0       	ldi	r22, 0x08	; 8
+ 2f6:	70 e0       	ldi	r23, 0x00	; 0
+ 2f8:	8f e1       	ldi	r24, 0x1F	; 31
+ 2fa:	90 e0       	ldi	r25, 0x00	; 0
+ 2fc:	d6 de       	rcall	.-596    	; 0xaa <motor_rotateClkwise>
+
+                    break;
+ 2fe:	0a c0       	rjmp	.+20     	; 0x314 <__stack+0x15>
+                case 0x1a: //L_up +L_down
+                    //Invalid
+                    break;
+                case 0x15: //END code
+
+                    motor_stop(MOTOR1_A, MOTOR1_B);
+ 300:	6e e1       	ldi	r22, 0x1E	; 30
+ 302:	70 e0       	ldi	r23, 0x00	; 0
+ 304:	8d e1       	ldi	r24, 0x1D	; 29
+ 306:	90 e0       	ldi	r25, 0x00	; 0
+ 308:	2c df       	rcall	.-424    	; 0x162 <motor_stop>
+                    motor_stop(MOTOR2_A, MOTOR2_B);
+ 30a:	68 e0       	ldi	r22, 0x08	; 8
+ 30c:	70 e0       	ldi	r23, 0x00	; 0
+ 30e:	8f e1       	ldi	r24, 0x1F	; 31
+ 310:	90 e0       	ldi	r25, 0x00	; 0
+ 312:	27 df       	rcall	.-434    	; 0x162 <motor_stop>
+                }
+            }
+            //	 }
+        }
+
+        if (remote_signal_lost)
+ 314:	80 91 0e 01 	lds	r24, 0x010E
+ 318:	88 23       	and	r24, r24
+ 31a:	09 f4       	brne	.+2      	; 0x31e <__stack+0x1f>
+ 31c:	6e cf       	rjmp	.-292    	; 0x1fa <main+0xe>
+        {
+            remote_signal_lost = 0;
+ 31e:	10 92 0e 01 	sts	0x010E, r1
+            //Shutdown the motor
+            motor_stop(MOTOR1_A, MOTOR1_B);
+ 322:	6e e1       	ldi	r22, 0x1E	; 30
+ 324:	70 e0       	ldi	r23, 0x00	; 0
+ 326:	8d e1       	ldi	r24, 0x1D	; 29
+ 328:	90 e0       	ldi	r25, 0x00	; 0
+ 32a:	1b df       	rcall	.-458    	; 0x162 <motor_stop>
+            motor_stop(MOTOR2_A, MOTOR2_B);
+ 32c:	68 e0       	ldi	r22, 0x08	; 8
+ 32e:	70 e0       	ldi	r23, 0x00	; 0
+ 330:	8f e1       	ldi	r24, 0x1F	; 31
+ 332:	90 e0       	ldi	r25, 0x00	; 0
+ 334:	16 df       	rcall	.-468    	; 0x162 <motor_stop>
+ 336:	61 cf       	rjmp	.-318    	; 0x1fa <main+0xe>
+
+00000338 <__vector_7>:
+        }
+    }
+}
+
+ISR(TIMER2_COMPA_vect)
+{
+ 338:	1f 92       	push	r1
+ 33a:	0f 92       	push	r0
+ 33c:	0f b6       	in	r0, 0x3f	; 63
+ 33e:	0f 92       	push	r0
+ 340:	11 24       	eor	r1, r1
+ 342:	2f 93       	push	r18
+ 344:	8f 93       	push	r24
+ 346:	9f 93       	push	r25
+ 348:	ef 93       	push	r30
+ 34a:	ff 93       	push	r31
+    //Clear interrupt flag
+    //TIMER_RESET_INTR_PENDING; // reset timer interrupt flag if required (currently only for Teensy and ATmega4809)
+
+    //gpio_toggle_pin(TEST);
+
+    if (irparams.state == CAPATURE) //Detecting the header of the frame.
+ 34c:	80 91 00 01 	lds	r24, 0x0100
+ 350:	81 11       	cpse	r24, r1
+ 352:	31 c0       	rjmp	.+98     	; 0x3b6 <__vector_7+0x7e>
+				   |
+___________________|
+|<----650US------->|<----650US------>|
+----------------------------*/
+    {
+        if (ioport_pin_is_low(IR_REMOTE))
+ 354:	4a 99       	sbic	0x09, 2	; 9
+ 356:	14 c0       	rjmp	.+40     	; 0x380 <__vector_7+0x48>
+        {
+
+            irparams.highLevelCounter = 0; //Debounce
+ 358:	e0 e0       	ldi	r30, 0x00	; 0
+ 35a:	f1 e0       	ldi	r31, 0x01	; 1
+ 35c:	11 82       	std	Z+1, r1	; 0x01
+            irparams.lowLevelCounter++;
+ 35e:	82 81       	ldd	r24, Z+2	; 0x02
+ 360:	8f 5f       	subi	r24, 0xFF	; 255
+ 362:	82 83       	std	Z+2, r24	; 0x02
+            if (irparams.lowLevelCounter == 11) //50US*12=600US
+ 364:	8b 30       	cpi	r24, 0x0B	; 11
+ 366:	21 f4       	brne	.+8      	; 0x370 <__vector_7+0x38>
+            {
+                irparams.startFlag = 1; //Produce
+ 368:	81 e0       	ldi	r24, 0x01	; 1
+ 36a:	80 93 03 01 	sts	0x0103, r24
+ 36e:	be c0       	rjmp	.+380    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+            }
+            else if (irparams.lowLevelCounter == 14) //50US*14=700US
+ 370:	8e 30       	cpi	r24, 0x0E	; 14
+ 372:	09 f0       	breq	.+2      	; 0x376 <__vector_7+0x3e>
+ 374:	bb c0       	rjmp	.+374    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+            {                                        //Low level exceeds 700US,abort and restart.
+                irparams.startFlag = 0;              //Abort
+ 376:	e0 e0       	ldi	r30, 0x00	; 0
+ 378:	f1 e0       	ldi	r31, 0x01	; 1
+ 37a:	13 82       	std	Z+3, r1	; 0x03
+                irparams.lowLevelCounter = 0;
+ 37c:	12 82       	std	Z+2, r1	; 0x02
+ 37e:	b6 c0       	rjmp	.+364    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+            }
+        }
+        else
+        {
+            irparams.lowLevelCounter = 0; //Debounce
+ 380:	e0 e0       	ldi	r30, 0x00	; 0
+ 382:	f1 e0       	ldi	r31, 0x01	; 1
+ 384:	12 82       	std	Z+2, r1	; 0x02
+            irparams.highLevelCounter++;
+ 386:	81 81       	ldd	r24, Z+1	; 0x01
+ 388:	8f 5f       	subi	r24, 0xFF	; 255
+ 38a:	81 83       	std	Z+1, r24	; 0x01
+            if (irparams.highLevelCounter == 11) //50US*13=650US
+ 38c:	8b 30       	cpi	r24, 0x0B	; 11
+ 38e:	69 f4       	brne	.+26     	; 0x3aa <__vector_7+0x72>
+            {
+
+                if (irparams.startFlag)
+ 390:	80 91 03 01 	lds	r24, 0x0103
+ 394:	88 23       	and	r24, r24
+ 396:	09 f4       	brne	.+2      	; 0x39a <__vector_7+0x62>
+ 398:	a9 c0       	rjmp	.+338    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+                {
+                    irparams.startFlag = 0; //Consume
+ 39a:	13 82       	std	Z+3, r1	; 0x03
+                                            //volt_low 650US + voltage_high 650US has been capatured,
+                                            //switch to the next stage for receiving 8-bit data.
+                    irparams.state = RECEIVING_DATA;
+ 39c:	81 e0       	ldi	r24, 0x01	; 1
+ 39e:	80 83       	st	Z, r24
+                    irparams.highLevelCounter = 0;
+ 3a0:	11 82       	std	Z+1, r1	; 0x01
+                    //Clear the counter,prepare for the next stage.
+                    //Initial variables
+                    irparams.bitCount = 0;
+ 3a2:	16 82       	std	Z+6, r1	; 0x06
+                    irparams.code = 0; //receiving buffer.
+ 3a4:	15 82       	std	Z+5, r1	; 0x05
+                    irparams.offset = 0;
+ 3a6:	10 86       	std	Z+8, r1	; 0x08
+ 3a8:	a1 c0       	rjmp	.+322    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+                }
+            }
+            else if (irparams.highLevelCounter == 14)
+ 3aa:	8e 30       	cpi	r24, 0x0E	; 14
+ 3ac:	09 f0       	breq	.+2      	; 0x3b0 <__vector_7+0x78>
+ 3ae:	9e c0       	rjmp	.+316    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+                irparams.highLevelCounter = 0;
+ 3b0:	10 92 01 01 	sts	0x0101, r1
+ 3b4:	9b c0       	rjmp	.+310    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+        }
+    }
+
+    else if (irparams.state == RECEIVING_DATA)
+ 3b6:	81 30       	cpi	r24, 0x01	; 1
+ 3b8:	09 f0       	breq	.+2      	; 0x3bc <__vector_7+0x84>
+ 3ba:	48 c0       	rjmp	.+144    	; 0x44c <__FUSE_REGION_LENGTH__+0x4c>
+    {
+        if (ioport_pin_is_high(IR_REMOTE)) //The pin is at high level
+ 3bc:	4a 9b       	sbis	0x09, 2	; 9
+ 3be:	22 c0       	rjmp	.+68     	; 0x404 <__FUSE_REGION_LENGTH__+0x4>
+        {
+            irparams.lowLevelCounter = 0;
+ 3c0:	e0 e0       	ldi	r30, 0x00	; 0
+ 3c2:	f1 e0       	ldi	r31, 0x01	; 1
+ 3c4:	12 82       	std	Z+2, r1	; 0x02
+            irparams.highLevelCounter++;
+ 3c6:	81 81       	ldd	r24, Z+1	; 0x01
+ 3c8:	8f 5f       	subi	r24, 0xFF	; 255
+            if (irparams.highLevelCounter == 7) //7*50US=350US
+ 3ca:	87 30       	cpi	r24, 0x07	; 7
+ 3cc:	19 f0       	breq	.+6      	; 0x3d4 <__vector_7+0x9c>
+    else if (irparams.state == RECEIVING_DATA)
+    {
+        if (ioport_pin_is_high(IR_REMOTE)) //The pin is at high level
+        {
+            irparams.lowLevelCounter = 0;
+            irparams.highLevelCounter++;
+ 3ce:	80 93 01 01 	sts	0x0101, r24
+ 3d2:	8c c0       	rjmp	.+280    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+            if (irparams.highLevelCounter == 7) //7*50US=350US
+            //High level asserts for 0.4MS represents 0
+            {
+                irparams.highLevelCounter = 0;
+ 3d4:	e0 e0       	ldi	r30, 0x00	; 0
+ 3d6:	f1 e0       	ldi	r31, 0x01	; 1
+ 3d8:	11 82       	std	Z+1, r1	; 0x01
+                irparams.code &= ~0x80; //Record the sampling result,
+ 3da:	85 81       	ldd	r24, Z+5	; 0x05
+ 3dc:	8f 77       	andi	r24, 0x7F	; 127
+ 3de:	85 83       	std	Z+5, r24	; 0x05
+                                        //Clear the MSB.
+
+                irparams.bitCount++;
+ 3e0:	86 81       	ldd	r24, Z+6	; 0x06
+ 3e2:	8f 5f       	subi	r24, 0xFF	; 255
+ 3e4:	86 83       	std	Z+6, r24	; 0x06
+ 3e6:	2b 98       	cbi	0x05, 3	; 5
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+
+	if (level) {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+ 3e8:	2b 9a       	sbi	0x05, 3	; 5
+
+                ioport_set_pin_low(TEST);
+                ioport_set_pin_high(TEST);
+
+                if (irparams.bitCount == 8)
+ 3ea:	88 30       	cpi	r24, 0x08	; 8
+ 3ec:	29 f4       	brne	.+10     	; 0x3f8 <__vector_7+0xc0>
+                {
+                    irparams.state = CONFIRMATION;
+ 3ee:	82 e0       	ldi	r24, 0x02	; 2
+ 3f0:	80 83       	st	Z, r24
+                    irparams.endFlag = 0;
+ 3f2:	14 82       	std	Z+4, r1	; 0x04
+                    irparams.receivedFlag = 0;
+ 3f4:	17 82       	std	Z+7, r1	; 0x07
+ 3f6:	7a c0       	rjmp	.+244    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+                }
+                else
+                    irparams.code >>= 1; //Right shift one bit,prepare
+ 3f8:	e0 e0       	ldi	r30, 0x00	; 0
+ 3fa:	f1 e0       	ldi	r31, 0x01	; 1
+ 3fc:	85 81       	ldd	r24, Z+5	; 0x05
+ 3fe:	86 95       	lsr	r24
+ 400:	85 83       	std	Z+5, r24	; 0x05
+ 402:	74 c0       	rjmp	.+232    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+                                         //for the reception of the next bit
+            }
+        }
+        else
+        {
+            irparams.highLevelCounter = 0;
+ 404:	e0 e0       	ldi	r30, 0x00	; 0
+ 406:	f1 e0       	ldi	r31, 0x01	; 1
+ 408:	11 82       	std	Z+1, r1	; 0x01
+            irparams.lowLevelCounter++;
+ 40a:	82 81       	ldd	r24, Z+2	; 0x02
+ 40c:	8f 5f       	subi	r24, 0xFF	; 255
+            if (irparams.lowLevelCounter == 8) //7*50US=350US
+ 40e:	88 30       	cpi	r24, 0x08	; 8
+ 410:	19 f0       	breq	.+6      	; 0x418 <__FUSE_REGION_LENGTH__+0x18>
+            }
+        }
+        else
+        {
+            irparams.highLevelCounter = 0;
+            irparams.lowLevelCounter++;
+ 412:	80 93 02 01 	sts	0x0102, r24
+ 416:	6a c0       	rjmp	.+212    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+            if (irparams.lowLevelCounter == 8) //7*50US=350US
+            //Low level asserts for 0.4MS represents 1
+            {
+                irparams.lowLevelCounter = 0;
+ 418:	e0 e0       	ldi	r30, 0x00	; 0
+ 41a:	f1 e0       	ldi	r31, 0x01	; 1
+ 41c:	12 82       	std	Z+2, r1	; 0x02
+                irparams.code |= 0x80; //Record the sampling result,
+ 41e:	85 81       	ldd	r24, Z+5	; 0x05
+ 420:	80 68       	ori	r24, 0x80	; 128
+ 422:	85 83       	std	Z+5, r24	; 0x05
+                                       //Set the MSB
+                irparams.bitCount++;
+ 424:	86 81       	ldd	r24, Z+6	; 0x06
+ 426:	8f 5f       	subi	r24, 0xFF	; 255
+ 428:	86 83       	std	Z+6, r24	; 0x06
+					(pin));
+	} else {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  & (~arch_ioport_pin_to_mask
+ 42a:	2b 98       	cbi	0x05, 3	; 5
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+
+	if (level) {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+ 42c:	2b 9a       	sbi	0x05, 3	; 5
+
+                ioport_set_pin_low(TEST);
+                ioport_set_pin_high(TEST);
+
+                if (irparams.bitCount == 8)
+ 42e:	88 30       	cpi	r24, 0x08	; 8
+ 430:	39 f4       	brne	.+14     	; 0x440 <__FUSE_REGION_LENGTH__+0x40>
+                {
+                    irparams.state = CONFIRMATION;
+ 432:	82 e0       	ldi	r24, 0x02	; 2
+ 434:	80 83       	st	Z, r24
+                    irparams.endFlag = 0;
+ 436:	14 82       	std	Z+4, r1	; 0x04
+                    irparams.receivedFlag = 0;
+ 438:	17 82       	std	Z+7, r1	; 0x07
+                    //If the last bit of the receiving data is low,some modification
+                    //is required.
+                    irparams.offset = 1;
+ 43a:	81 e0       	ldi	r24, 0x01	; 1
+ 43c:	80 87       	std	Z+8, r24	; 0x08
+ 43e:	56 c0       	rjmp	.+172    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+                }
+
+                else
+                    irparams.code >>= 1; //Right shift one bit,prepare
+ 440:	e0 e0       	ldi	r30, 0x00	; 0
+ 442:	f1 e0       	ldi	r31, 0x01	; 1
+ 444:	85 81       	ldd	r24, Z+5	; 0x05
+ 446:	86 95       	lsr	r24
+ 448:	85 83       	std	Z+5, r24	; 0x05
+ 44a:	50 c0       	rjmp	.+160    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+                                         //for the arrival of the next bit
+            }
+        }
+    }
+
+    else if (irparams.state == CONFIRMATION)
+ 44c:	82 30       	cpi	r24, 0x02	; 2
+ 44e:	09 f0       	breq	.+2      	; 0x452 <__FUSE_REGION_LENGTH__+0x52>
+ 450:	4d c0       	rjmp	.+154    	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+|<----650US-------->|<----650US------>|
+----------------------*/
+        //Confirm if END compiles the standard KXM013C format,if the confirmation
+        //failed,abort the value and restart from the capature state.
+
+        if (ioport_pin_is_high(IR_REMOTE))
+ 452:	4a 9b       	sbis	0x09, 2	; 9
+ 454:	25 c0       	rjmp	.+74     	; 0x4a0 <__FUSE_REGION_LENGTH__+0xa0>
+        {
+            if (irparams.lowLevelCounter > 0 && irparams.lowLevelCounter < 11)
+ 456:	80 91 02 01 	lds	r24, 0x0102
+ 45a:	81 50       	subi	r24, 0x01	; 1
+ 45c:	8a 30       	cpi	r24, 0x0A	; 10
+ 45e:	68 f4       	brcc	.+26     	; 0x47a <__FUSE_REGION_LENGTH__+0x7a>
+            //Volt_low is too short,confirmation failure,
+            //abort and restart the mission.
+            {
+                if (irparams.offset == 1)
+ 460:	80 91 08 01 	lds	r24, 0x0108
+ 464:	81 30       	cpi	r24, 0x01	; 1
+ 466:	29 f4       	brne	.+10     	; 0x472 <__FUSE_REGION_LENGTH__+0x72>
+                {
+                    irparams.offset = 0;
+ 468:	e0 e0       	ldi	r30, 0x00	; 0
+ 46a:	f1 e0       	ldi	r31, 0x01	; 1
+ 46c:	10 86       	std	Z+8, r1	; 0x08
+                    irparams.lowLevelCounter = 0;
+ 46e:	12 82       	std	Z+2, r1	; 0x02
+ 470:	04 c0       	rjmp	.+8      	; 0x47a <__FUSE_REGION_LENGTH__+0x7a>
+                    //No need to switch state
+                }
+                else
+                {
+                    irparams.state = CAPATURE;
+ 472:	e0 e0       	ldi	r30, 0x00	; 0
+ 474:	f1 e0       	ldi	r31, 0x01	; 1
+ 476:	10 82       	st	Z, r1
+                    irparams.lowLevelCounter = 0;
+ 478:	12 82       	std	Z+2, r1	; 0x02
+            }
+
+            //Check if the volt_high has asserted for approximately 650US
+            //if the voltage level becomes low during this period,
+            //or exceeds the regular time,abort and restart the mission
+            irparams.highLevelCounter++;
+ 47a:	e0 e0       	ldi	r30, 0x00	; 0
+ 47c:	f1 e0       	ldi	r31, 0x01	; 1
+ 47e:	81 81       	ldd	r24, Z+1	; 0x01
+ 480:	8f 5f       	subi	r24, 0xFF	; 255
+ 482:	81 83       	std	Z+1, r24	; 0x01
+            if (irparams.highLevelCounter == 11) //50US*13=650US
+ 484:	8b 30       	cpi	r24, 0x0B	; 11
+ 486:	21 f4       	brne	.+8      	; 0x490 <__FUSE_REGION_LENGTH__+0x90>
+                irparams.endFlag = 1;            //Produce
+ 488:	81 e0       	ldi	r24, 0x01	; 1
+ 48a:	80 93 04 01 	sts	0x0104, r24
+ 48e:	2e c0       	rjmp	.+92     	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+            else if (irparams.highLevelCounter == 20)
+ 490:	84 31       	cpi	r24, 0x14	; 20
+ 492:	61 f5       	brne	.+88     	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+            {
+                irparams.endFlag = 0;
+ 494:	e0 e0       	ldi	r30, 0x00	; 0
+ 496:	f1 e0       	ldi	r31, 0x01	; 1
+ 498:	14 82       	std	Z+4, r1	; 0x04
+                irparams.highLevelCounter = 0;
+ 49a:	11 82       	std	Z+1, r1	; 0x01
+                //Time exceed,abort and restart the mission
+                irparams.state = CAPATURE;
+ 49c:	10 82       	st	Z, r1
+ 49e:	26 c0       	rjmp	.+76     	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+            }
+        }
+        else
+        {
+            if (irparams.highLevelCounter > 0 && irparams.highLevelCounter < 11)
+ 4a0:	80 91 01 01 	lds	r24, 0x0101
+ 4a4:	81 50       	subi	r24, 0x01	; 1
+ 4a6:	8a 30       	cpi	r24, 0x0A	; 10
+ 4a8:	20 f4       	brcc	.+8      	; 0x4b2 <__FUSE_REGION_LENGTH__+0xb2>
+            //Volt_high is too short,abort.
+            {
+                irparams.state = CAPATURE;
+ 4aa:	e0 e0       	ldi	r30, 0x00	; 0
+ 4ac:	f1 e0       	ldi	r31, 0x01	; 1
+ 4ae:	10 82       	st	Z, r1
+                irparams.highLevelCounter = 0;
+ 4b0:	11 82       	std	Z+1, r1	; 0x01
+            }
+            irparams.lowLevelCounter++;
+ 4b2:	e0 e0       	ldi	r30, 0x00	; 0
+ 4b4:	f1 e0       	ldi	r31, 0x01	; 1
+ 4b6:	82 81       	ldd	r24, Z+2	; 0x02
+ 4b8:	8f 5f       	subi	r24, 0xFF	; 255
+ 4ba:	82 83       	std	Z+2, r24	; 0x02
+            if (irparams.lowLevelCounter == 11) //The receiving pin has being pulled down
+ 4bc:	8b 30       	cpi	r24, 0x0B	; 11
+ 4be:	81 f4       	brne	.+32     	; 0x4e0 <__FUSE_REGION_LENGTH__+0xe0>
+            //for at least 0.6MS
+            {
+                if (irparams.endFlag) //Consume
+ 4c0:	80 91 04 01 	lds	r24, 0x0104
+ 4c4:	88 23       	and	r24, r24
+ 4c6:	91 f0       	breq	.+36     	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+                {
+                    irparams.endFlag = 0;
+ 4c8:	14 82       	std	Z+4, r1	; 0x04
+                    irparams.receivedFlag = 1;
+ 4ca:	81 e0       	ldi	r24, 0x01	; 1
+ 4cc:	87 83       	std	Z+7, r24	; 0x07
+                    recv_flag = 1;
+ 4ce:	80 93 0f 01 	sts	0x010F, r24
+                    code = irparams.code;
+ 4d2:	85 81       	ldd	r24, Z+5	; 0x05
+ 4d4:	80 93 14 01 	sts	0x0114, r24
+                    //Format confirmed,the data is reliable.
+                    irparams.state = CAPATURE;
+ 4d8:	10 82       	st	Z, r1
+                    //Switch to the capature stata,start a new cycle.
+                    irparams.lowLevelCounter = 0;
+ 4da:	12 82       	std	Z+2, r1	; 0x02
+                    irparams.highLevelCounter = 0;
+ 4dc:	11 82       	std	Z+1, r1	; 0x01
+ 4de:	06 c0       	rjmp	.+12     	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+
+                    //	gpio_set_pin_low(TEST);
+                    //	gpio_set_pin_high(TEST);
+                }
+            }
+            else if (irparams.lowLevelCounter == 14)
+ 4e0:	8e 30       	cpi	r24, 0x0E	; 14
+ 4e2:	21 f4       	brne	.+8      	; 0x4ec <__FUSE_REGION_LENGTH__+0xec>
+            {
+                irparams.lowLevelCounter = 0;
+ 4e4:	e0 e0       	ldi	r30, 0x00	; 0
+ 4e6:	f1 e0       	ldi	r31, 0x01	; 1
+ 4e8:	12 82       	std	Z+2, r1	; 0x02
+                //Time exceed,abort and restart the mission
+                irparams.state = CAPATURE;
+ 4ea:	10 82       	st	Z, r1
+            }
+        }
+    }
+
+    //Task:Refresh the remote_id at remote ctrl state.
+    count_1MS++;
+ 4ec:	80 91 09 01 	lds	r24, 0x0109
+ 4f0:	8f 5f       	subi	r24, 0xFF	; 255
+    if (count_1MS == 20) //50US*20=1MS
+ 4f2:	84 31       	cpi	r24, 0x14	; 20
+ 4f4:	19 f0       	breq	.+6      	; 0x4fc <__FUSE_REGION_LENGTH__+0xfc>
+            }
+        }
+    }
+
+    //Task:Refresh the remote_id at remote ctrl state.
+    count_1MS++;
+ 4f6:	80 93 09 01 	sts	0x0109, r24
+ 4fa:	3e c0       	rjmp	.+124    	; 0x578 <__FUSE_REGION_LENGTH__+0x178>
+    if (count_1MS == 20) //50US*20=1MS
+    {
+        count_1MS = 0;
+ 4fc:	10 92 09 01 	sts	0x0109, r1
+        //The tasks in this loop needs to be debouncing first,
+        //so as to get more reliable values.
+
+        //TASK_REMOTE_ID_SETTING
+        //Sampling the dial-switch
+        remote_id_setting = 0;
+ 500:	10 92 0a 01 	sts	0x010A, r1
+        if (!ioport_get_pin_level(REMEOTE_ID1)) //Active low
+ 504:	31 99       	sbic	0x06, 1	; 6
+ 506:	03 c0       	rjmp	.+6      	; 0x50e <__FUSE_REGION_LENGTH__+0x10e>
+            remote_id_setting |= MASK_REMOTE_ID1;
+ 508:	84 e0       	ldi	r24, 0x04	; 4
+ 50a:	80 93 0a 01 	sts	0x010A, r24
+        if (!ioport_get_pin_level(REMEOTE_ID2)) //Active low
+ 50e:	1d 99       	sbic	0x03, 5	; 3
+ 510:	05 c0       	rjmp	.+10     	; 0x51c <__FUSE_REGION_LENGTH__+0x11c>
+            remote_id_setting |= MASK_REMOTE_ID2;
+ 512:	80 91 0a 01 	lds	r24, 0x010A
+ 516:	82 60       	ori	r24, 0x02	; 2
+ 518:	80 93 0a 01 	sts	0x010A, r24
+        if (!ioport_get_pin_level(REMEOTE_ID3)) //Active low
+ 51c:	1c 99       	sbic	0x03, 4	; 3
+ 51e:	05 c0       	rjmp	.+10     	; 0x52a <__FUSE_REGION_LENGTH__+0x12a>
+            remote_id_setting |= MASK_REMOTE_ID3;
+ 520:	80 91 0a 01 	lds	r24, 0x010A
+ 524:	81 60       	ori	r24, 0x01	; 1
+ 526:	80 93 0a 01 	sts	0x010A, r24
+        //If the value changed,implementing debouncing process.
+        if (remote_id != remote_id_setting)
+ 52a:	80 91 11 01 	lds	r24, 0x0111
+ 52e:	90 91 0a 01 	lds	r25, 0x010A
+ 532:	89 17       	cp	r24, r25
+ 534:	51 f0       	breq	.+20     	; 0x54a <__FUSE_REGION_LENGTH__+0x14a>
+        {
+            remote_id_setting_counter++;
+ 536:	80 91 0b 01 	lds	r24, 0x010B
+ 53a:	8f 5f       	subi	r24, 0xFF	; 255
+ 53c:	80 93 0b 01 	sts	0x010B, r24
+            if (remote_id_setting_counter == 100)
+ 540:	84 36       	cpi	r24, 0x64	; 100
+ 542:	29 f4       	brne	.+10     	; 0x54e <__FUSE_REGION_LENGTH__+0x14e>
+                //If the change lasts for 100MS
+                //Confirm the change and refresh the value.
+                remote_id = remote_id_setting;
+ 544:	90 93 11 01 	sts	0x0111, r25
+ 548:	02 c0       	rjmp	.+4      	; 0x54e <__FUSE_REGION_LENGTH__+0x14e>
+        }
+        else
+            remote_id_setting_counter = 0;
+ 54a:	10 92 0b 01 	sts	0x010B, r1
+
+        //TASK_SIGNAL_MONITOR
+        //After receiving the signal,start this counter,if the counter
+        //reaches the time line,signal the main ctrller to stop the motor.
+        if (remote_signal_countdown)
+ 54e:	80 91 10 01 	lds	r24, 0x0110
+ 552:	88 23       	and	r24, r24
+ 554:	89 f0       	breq	.+34     	; 0x578 <__FUSE_REGION_LENGTH__+0x178>
+        {
+            count_1S++;
+ 556:	80 91 0c 01 	lds	r24, 0x010C
+ 55a:	90 91 0d 01 	lds	r25, 0x010D
+ 55e:	01 96       	adiw	r24, 0x01	; 1
+ 560:	90 93 0d 01 	sts	0x010D, r25
+ 564:	80 93 0c 01 	sts	0x010C, r24
+            if (count_1S == 1000)
+ 568:	88 3e       	cpi	r24, 0xE8	; 232
+ 56a:	93 40       	sbci	r25, 0x03	; 3
+ 56c:	29 f4       	brne	.+10     	; 0x578 <__FUSE_REGION_LENGTH__+0x178>
+            {
+                remote_signal_countdown = 0;
+ 56e:	10 92 10 01 	sts	0x0110, r1
+                remote_signal_lost = 1;
+ 572:	81 e0       	ldi	r24, 0x01	; 1
+ 574:	80 93 0e 01 	sts	0x010E, r24
+            }
+        }
+    }
+}
+ 578:	ff 91       	pop	r31
+ 57a:	ef 91       	pop	r30
+ 57c:	9f 91       	pop	r25
+ 57e:	8f 91       	pop	r24
+ 580:	2f 91       	pop	r18
+ 582:	0f 90       	pop	r0
+ 584:	0f be       	out	0x3f, r0	; 63
+ 586:	0f 90       	pop	r0
+ 588:	1f 90       	pop	r1
+ 58a:	18 95       	reti
+
+0000058c <_exit>:
+ 58c:	f8 94       	cli
+
+0000058e <__stop_program>:
+ 58e:	ff cf       	rjmp	.-2      	; 0x58e <__stop_program>
