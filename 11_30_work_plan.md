@@ -16,7 +16,7 @@
 ----------------
 ---------------
 ![image](https://github.com/Shockwave202/WorkReport/blob/main/11_30/4__joyStickCtrlledToyCar.png)
-5__joySrickCtrlledRobot
+5__joyStickCtrlledRobot
 ----------------
 ---------------
 ![image](https://github.com/Shockwave202/WorkReport/blob/main/11_30/5__joySrickCtrlledRobot.png)
