@@ -1,0 +1,25 @@
+#######################################
+# Syntax Coloring Map For PushButton
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+PushButton	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+create	KEYWORD2
+isPress	KEYWORD2
+isRelease	KEYWORD2
+isShortPress	KEYWORD2
+isLongPress	KEYWORD2
+isDoubleClick	KEYWORD2
+isSingleClick	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
