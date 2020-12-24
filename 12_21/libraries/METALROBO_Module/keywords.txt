@@ -1,0 +1,48 @@
+﻿#######################################
+# Syntax Coloring Map For 你的类名
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1) 数据类型关键字
+#######################################
+
+ 
+#######################################
+# Methods and Functions (KEYWORD2) 方法类型关键字
+#######################################
+
+#######################################
+# Constants (LITERAL1)  常量类型关键字
+#######################################
+
+#################################
+#	库关键字（灰色）	KEYWORD0
+#################################
+AArobot_Module	KEYWORD0
+
+#################################
+#	类关键字（加粗橙色）	KEYWORD1
+#################################
+US	KEYWORD1
+DHT11	KEYWORD1
+dimmer	KEYWORD1
+LEDdisp	KEYWORD1
+rgb_led	KEYWORD1
+buzzer	KEYWORD1
+#################################
+#	函数关键字（橙色）	KEYWORD2
+#################################
+trig	KEYWORD2
+echo	KEYWORD2
+read	KEYWORD2
+port	KEYWORD2
+bright	KEYWORD2
+temperature	KEYWORD2
+humidity	KEYWORD2
+distance	KEYWORD2
+color	KEYWORD2
+tone	KEYWORD2
+noTone	KEYWORD2
+#################################
+#	变量关键字（蓝色）	LITERAL0
+#################################
