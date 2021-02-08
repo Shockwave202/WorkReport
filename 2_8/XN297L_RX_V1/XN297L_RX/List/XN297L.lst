@@ -1,0 +1,652 @@
+C51 COMPILER V9.01   XN297L                                                                02/08/2021 14:10:08 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE XN297L
+OBJECT MODULE PLACED IN .\Output\XN297L.obj
+COMPILER INVOKED BY: D:\Program Files\C51\BIN\C51.EXE Code\XN297L.c BROWSE INCDIR(..\Include) DEFINE(FOSC_160000) DEBUG 
+                    -OBJECTEXTEND PRINT(.\List\XN297L.lst) OBJECT(.\Output\XN297L.obj)
+
+line level    source
+
+   1          
+   2          
+   3          #include "N76E003.h" //SPDR
+   4          
+   5          #include "SFR_Macro.h" //clr_SPIF
+   6          #include "Function_define.h" //SET_BIT7
+   7          #include "XN297L.h" //W_REGISTER
+   8          
+   9          
+  10          
+  11          //All the hardware registers in XN297L are mapped into the RAM of MCU,
+  12          //thus,modify the mapping register first,then send the content to
+  13          //XN297L through SPI.
+  14          uint8_t CONFIG_mapping;
+  15          uint8_t SETUP_AW_mapping;
+  16          uint8_t RF_CH_mapping;
+  17          uint8_t RF_SETUP_mapping;
+  18          uint8_t STATUS_mapping;
+  19          uint8_t TX_addr[5]={1, 2, 3, 4, 5};
+  20          uint8_t RX_addr_P0[5]= {1, 2, 3, 4, 5};
+  21          uint8_t  BB_cal_data[]    = {0x12,0xED,0x67,0x9C,0x46};                               //1MÀŸ¬ ≈‰÷√
+  22          uint8_t  RF_cal_data[]    = {0xF6,0x3F,0x5D};
+  23          uint8_t  RF_cal2_data[]   = {0x45,0x21,0xef,0x2C,0x5A,0x40};
+  24          uint8_t  Dem_cal_data[]   = {0x01};  
+  25          uint8_t  Dem_cal2_data[]  = {0x0b,0xDF,0x02};
+  26          uint8_t  EN_AA_mapping;  
+  27          uint8_t  SETUP_RETR_mapping; 
+  28          
+  29          //Which register would u like to check?
+  30          //This fcn can be used to ckeck the SPI commumication,write data to a specific 
+  31          //register,then read out the value,if the data written in and the data read out
+  32          //are of the same value,the SPI RW operation is normal. 
+  33          uint8_t read_single_byte_register(uint8_t addr)
+  34          {       uint8_t result;
+  35   1      //Inform the module that the MCU wants to read a specific register.
+  36   1      SS = 0;
+  37   1          SPDR = R_REGISTER + addr;
+  38   1          while (!(SPSR & SET_BIT7))
+  39   1              ;
+  40   1          clr_SPIF;
+  41   1      
+  42   1      //Now,send an arbitrary data in exchange for the contents.
+  43   1          SPDR = 0x55;
+  44   1          while (!(SPSR & SET_BIT7))
+  45   1              ;
+  46   1          clr_SPIF;
+  47   1        //Read in the contents.
+  48   1        result=SPDR;
+  49   1      
+  50   1      //Work is done,return to the idle state.
+  51   1      SS = 1;
+  52   1      return result;
+  53   1      }
+  54          
+C51 COMPILER V9.01   XN297L                                                                02/08/2021 14:10:08 PAGE 2   
+
+  55          //According to the SPI interal circuits,if the Master sends
+  56          //out a data through MOSI pin,the data resides in the Slave
+  57          //will be shifted out through MISO pin,that is,
+  58          //the Master and the Slave will exchange data with each other. 
+  59          uint8_t read_RX_payload()
+  60          {       uint8_t result;
+  61   1      //First off,send the command 'R_RX_PAYLOAD' to the module,
+  62   1      SS = 0;
+  63   1          SPDR = R_RX_PAYLOAD;
+  64   1          while (!(SPSR & SET_BIT7))
+  65   1              ;
+  66   1          clr_SPIF;
+  67   1       //In the mean while,the contents of the status register will be transferred in
+  68   1       
+  69   1       //Now,send an arbitrary data,and the payload will be shifted in.
+  70   1          SPDR = 0x55;
+  71   1          while (!(SPSR & SET_BIT7))
+  72   1              ;
+  73   1          clr_SPIF;
+  74   1        //Read in the payload
+  75   1        result=SPDR;
+  76   1      
+  77   1      //Work is done,return to the idle state.
+  78   1      SS = 1;
+  79   1      return result;
+  80   1      }
+  81          
+  82          
+  83          void flush_RX_FIFO()
+  84          {
+  85   1          //Send cmd through SPI ...
+  86   1          SS = 0;
+  87   1          SPDR = FLUSH_RX;
+  88   1          while (!(SPSR & SET_BIT7))
+  89   1              ;
+  90   1          clr_SPIF;
+  91   1          //Work is done,return to the idle state.
+  92   1      SS = 1;
+  93   1      }
+  94          
+  95          //Switch XN297L from power down mode to RX mode.
+  96          void PWR_DN_mode_to_RX_mode()
+  97          {
+  98   1      //Template:
+  99   1      //CONFIG_mapping=EN_PM|MASK_RX_DR|MASK_TX_DS|MASK_MAX_RT|EN_CRC|CRCO|PWR_UP|PRIM_RX;
+ 100   1      CONFIG_mapping = EN_PM | MASK_TX_DS | MASK_MAX_RT | PWR_UP |PRIM_RX;
+ 101   1      //Enable crystal oscillator
+ 102   1      //Enable power management module
+ 103   1      //The module is configured as receiver.
+ 104   1      //An active low interrupt will generate on IRQ pin after data received.
+ 105   1      
+ 106   1      //Send through SPI...
+ 107   1      SS = 0;
+ 108   1      //Send the command sequentially according to the command-format.
+ 109   1      //Inform XN297L that the MCU wants to write the register 'CONFIG'
+ 110   1      //Write to SFDR will start the transmission intantly.
+ 111   1      SPDR = W_REGISTER + CONFIG;
+ 112   1      while (!(SPSR & SET_BIT7))
+ 113   1          ;
+ 114   1      clr_SPIF;
+ 115   1      
+ 116   1      //Send the content
+C51 COMPILER V9.01   XN297L                                                                02/08/2021 14:10:08 PAGE 3   
+
+ 117   1      SPDR = CONFIG_mapping;
+ 118   1      while (!(SPSR & SET_BIT7))
+ 119   1          ;
+ 120   1      clr_SPIF;
+ 121   1      
+ 122   1      //Work is done,return to the idle state.
+ 123   1      SS = 1;
+ 124   1      }
+ 125          
+ 126          void setup_address_witdth(enum address_width_t addr_wid)
+ 127          { 
+ 128   1          switch (addr_wid)
+ 129   1          {
+ 130   2          case AW_3_BYTES:
+ 131   2              SETUP_AW_mapping = AW_3_BYTES;
+ 132   2              break;
+ 133   2          case AW_4_BYTES:
+ 134   2              SETUP_AW_mapping = AW_4_BYTES;
+ 135   2              break;
+ 136   2          case AW_5_BYTES:
+ 137   2              SETUP_AW_mapping = AW_5_BYTES;
+ 138   2              break;
+ 139   2          }
+ 140   1      
+ 141   1          //Send through SPI...
+ 142   1          SS = 0;
+ 143   1          //Send the command sequentially according to the command-format.
+ 144   1          //Inform XN297L that the MCU wants to write the register 'SETUP_AW'
+ 145   1          SPDR = W_REGISTER + SETUP_AW;
+ 146   1          while (!(SPSR & SET_BIT7))
+ 147   1              ;
+ 148   1          clr_SPIF;
+ 149   1          //Send the content
+ 150   1          SPDR = SETUP_AW_mapping;
+ 151   1          while (!(SPSR & SET_BIT7))
+ 152   1              ;
+ 153   1          clr_SPIF;
+ 154   1      
+ 155   1          //Work is done,return to the idle state.
+ 156   1          SS = 1;
+ 157   1      }
+ 158          
+ 159          //The freq is in MHZ
+ 160          //Freq range:2400MHZ-2483MHZ
+ 161          // The channels, which is integer times of 16MHz, such as 2400 MHz, 2416 MHz,
+ 162          // 2432MHz, 2448 MHz, 2464 MHz, and 2480MHz is not recommended.
+ 163          // Because of the receiver sensitivity is degraded about 2dB in these channels.
+ 164          void set_frequency_channel(uint16_t freq)
+ 165          {
+ 166   1          RF_CH_mapping = freq - 2400;
+ 167   1      
+ 168   1          //Send through SPI...
+ 169   1          SS = 0;
+ 170   1          //Send the command sequentially according to the command-format.
+ 171   1          //Inform XN297L that the MCU wants to write the register 'RF_CH'
+ 172   1          SPDR = W_REGISTER + RF_CH;
+ 173   1          while (!(SPSR & SET_BIT7))
+ 174   1              ;
+ 175   1          clr_SPIF;
+ 176   1          //Send the content
+ 177   1          SPDR = RF_CH_mapping;
+ 178   1          while (!(SPSR & SET_BIT7))
+C51 COMPILER V9.01   XN297L                                                                02/08/2021 14:10:08 PAGE 4   
+
+ 179   1              ;
+ 180   1          clr_SPIF;
+ 181   1      
+ 182   1          //Work is done,return to the idle state.
+ 183   1          SS = 1;
+ 184   1      }
+ 185          
+ 186          void set_spi_data_rate(enum spi_data_rate_t data_rate)
+ 187          {
+ 188   1          //Erase the previous data field stored in the variable
+ 189   1          RF_SETUP_mapping &= 0x3f; //RF_SETUP[7:6]=0;
+ 190   1          switch (data_rate)
+ 191   1          {
+ 192   2          case DR_2MBPS:
+ 193   2              RF_SETUP_mapping |= DR_2MBPS;
+ 194   2              break;
+ 195   2          case DR_1MBPS:
+ 196   2              RF_SETUP_mapping |= DR_1MBPS;
+ 197   2              break;
+ 198   2          case DR_250KBPS:
+ 199   2              RF_SETUP_mapping |= DR_250KBPS;
+ 200   2              break;
+ 201   2          }
+ 202   1          //Send through SPI...
+ 203   1          SS = 0;
+ 204   1          //Send the command sequentially according to the command-format.
+ 205   1          //Inform XN297L that the MCU wants to write the register 'RF_SETUP'
+ 206   1          SPDR = W_REGISTER + RF_SETUP;
+ 207   1          while (!(SPSR & SET_BIT7))
+ 208   1              ;
+ 209   1          clr_SPIF;
+ 210   1          //Send the content
+ 211   1          SPDR = RF_SETUP_mapping;
+ 212   1          while (!(SPSR & SET_BIT7))
+ 213   1              ;
+ 214   1          clr_SPIF;
+ 215   1      
+ 216   1          //Work is done,return to the idle state.
+ 217   1          SS = 1;
+ 218   1      }
+ 219          
+ 220          /*-------------------------------------------*/
+ 221          void set_rf_output_power(enum rf_output_power_t output_power)
+ 222          {
+ 223   1          //Erase the previous data field stored in the variable
+ 224   1          RF_SETUP_mapping &= 0xc0; //RF_SETUP[5:0]=0;
+ 225   1      
+ 226   1          switch (output_power)
+ 227   1          {
+ 228   2          case RF11DBM:
+ 229   2              RF_SETUP_mapping |= RF11DBM;
+ 230   2              break;
+ 231   2          case RF9DBM:
+ 232   2              RF_SETUP_mapping |= RF9DBM;
+ 233   2              break;
+ 234   2          case RF5DBM:
+ 235   2              RF_SETUP_mapping |= RF5DBM;
+ 236   2              break;
+ 237   2          case RF4DBM:
+ 238   2              RF_SETUP_mapping |= RF4DBM;
+ 239   2              break;
+ 240   2          case RF_1DBM:
+C51 COMPILER V9.01   XN297L                                                                02/08/2021 14:10:08 PAGE 5   
+
+ 241   2              RF_SETUP_mapping |= RF_1DBM;
+ 242   2              break;
+ 243   2          case RF_10DBM:
+ 244   2              RF_SETUP_mapping |= RF_10DBM;
+ 245   2              break;
+ 246   2          case RF_23DBM:
+ 247   2              RF_SETUP_mapping |= RF_23DBM;
+ 248   2              break;
+ 249   2          }
+ 250   1      
+ 251   1          //Send through SPI...
+ 252   1          SS = 0;
+ 253   1          //Send the command sequentially according to the command-format.
+ 254   1          //Inform XN297L that the MCU wants to write the register 'RF_SETUP'
+ 255   1          SPDR = W_REGISTER + RF_SETUP;
+ 256   1          while (!(SPSR & SET_BIT7))
+ 257   1              ;
+ 258   1          clr_SPIF;
+ 259   1          //Send the content
+ 260   1          SPDR = RF_SETUP_mapping;
+ 261   1          while (!(SPSR & SET_BIT7))
+ 262   1              ;
+ 263   1          clr_SPIF;
+ 264   1      
+ 265   1          //Work is done,return to the idle state.
+ 266   1          SS = 1;
+ 267   1      }
+ 268          
+ 269          /*-------------------------------------*/
+ 270          //The address width should be assigned before setting the address.
+ 271          //ie. setup_address_witdth(AW_3_BYTES);
+ 272          //In order to receive the data from the transmitter,the address of the 
+ 273          //receiver should be the same with the transmitter.
+ 274          void set_RX_address_P0(uint8_t *addr)
+ 275          {
+ 276   1            int i;
+ 277   1      
+ 278   1          //Send through SPI...
+ 279   1          SS = 0;
+ 280   1          //Send the command sequentially according to the command-format.
+ 281   1          //Inform XN297L that the MCU wants to write the register 'RX_ADDR_P0'
+ 282   1          SPDR = W_REGISTER + RX_ADDR_P0;
+ 283   1          while (!(SPSR & SET_BIT7))
+ 284   1              ;
+ 285   1          clr_SPIF;
+ 286   1      
+ 287   1        //Send the content
+ 288   1          switch (SETUP_AW_mapping)
+ 289   1          {
+ 290   2          case AW_3_BYTES:
+ 291   2              for (i = 0; i < 3; i++)
+ 292   2              {
+ 293   3                  SPDR = addr[i];
+ 294   3                  while (!(SPSR & SET_BIT7))
+ 295   3                      ;
+ 296   3                  clr_SPIF;
+ 297   3              }
+ 298   2              break;
+ 299   2          case AW_4_BYTES:
+ 300   2              for (i = 0; i < 4; i++)
+ 301   2              {
+ 302   3                  SPDR =  addr[i];
+C51 COMPILER V9.01   XN297L                                                                02/08/2021 14:10:08 PAGE 6   
+
+ 303   3                  while (!(SPSR & SET_BIT7))
+ 304   3                      ;
+ 305   3                  clr_SPIF;
+ 306   3              }
+ 307   2              break;
+ 308   2          case AW_5_BYTES:
+ 309   2              for (i = 0; i < 5; i++)
+ 310   2              {
+ 311   3                  SPDR =  addr[i];
+ 312   3                  while (!(SPSR & SET_BIT7))
+ 313   3                      ;
+ 314   3                  clr_SPIF;
+ 315   3              }
+ 316   2              break;
+ 317   2          }
+ 318   1      
+ 319   1           //Work is done,return to the idle state.
+ 320   1          SS = 1;
+ 321   1      }
+ 322          /*---------------------------------------*/
+ 323          //Payload width range:0 to 64,0 stands for pipe not used.
+ 324          void set_RX_payload_width(uint8_t width)
+ 325          {
+ 326   1          //Send through SPI...
+ 327   1          SS = 0;
+ 328   1          //Send the command sequentially according to the command-format.
+ 329   1          //Inform XN297L that the MCU wants to write the register 'RX_PW_P0'
+ 330   1          SPDR = W_REGISTER + RX_PW_P0;
+ 331   1          while (!(SPSR & SET_BIT7))
+ 332   1              ;
+ 333   1          clr_SPIF;
+ 334   1          //Send the content
+ 335   1          SPDR = width;
+ 336   1          while (!(SPSR & SET_BIT7))
+ 337   1              ;
+ 338   1          clr_SPIF;
+ 339   1      
+ 340   1          //Work is done,return to the idle state.
+ 341   1          SS = 1;
+ 342   1      }
+ 343          /*-----------------------------------------*/
+ 344          void config_BB_CAL()
+ 345          {
+ 346   1          int i;
+ 347   1          //Send through SPI...
+ 348   1          SS = 0;
+ 349   1          //Send the command sequentially according to the command-format.
+ 350   1          //Inform XN297L that the MCU wants to write the register 'BB_CAL'
+ 351   1          SPDR = W_REGISTER + BB_CAL;
+ 352   1          while (!(SPSR & SET_BIT7))
+ 353   1              ;
+ 354   1          clr_SPIF;
+ 355   1        //Send the content
+ 356   1              for (i = 0; i < 5; i++)
+ 357   1              {
+ 358   2                  SPDR = BB_cal_data[i];
+ 359   2                  while (!(SPSR & SET_BIT7))
+ 360   2                      ;
+ 361   2                  clr_SPIF;
+ 362   2              }
+ 363   1           //Work is done,return to the idle state.
+ 364   1          SS = 1;
+C51 COMPILER V9.01   XN297L                                                                02/08/2021 14:10:08 PAGE 7   
+
+ 365   1      }
+ 366          
+ 367          void config_RF_CAL()
+ 368          {
+ 369   1          int i;
+ 370   1          //Send through SPI...
+ 371   1          SS = 0;
+ 372   1          //Send the command sequentially according to the command-format.
+ 373   1          //Inform XN297L that the MCU wants to write the register 'RF_CAL'
+ 374   1          SPDR = W_REGISTER + RF_CAL;
+ 375   1          while (!(SPSR & SET_BIT7))
+ 376   1              ;
+ 377   1          clr_SPIF;
+ 378   1        //Send the content
+ 379   1              for (i = 0; i < 3; i++)
+ 380   1              {
+ 381   2                  SPDR = RF_cal_data[i];
+ 382   2                  while (!(SPSR & SET_BIT7))
+ 383   2                      ;
+ 384   2                  clr_SPIF;
+ 385   2              }
+ 386   1           //Work is done,return to the idle state.
+ 387   1          SS = 1;
+ 388   1      }
+ 389          
+ 390          void config_RF_CAL2()
+ 391          {
+ 392   1          int i;
+ 393   1          //Send through SPI...
+ 394   1          SS = 0;
+ 395   1          //Send the command sequentially according to the command-format.
+ 396   1          //Inform XN297L that the MCU wants to write the register 'RF_CAL2'
+ 397   1          SPDR = W_REGISTER + RF_CAL2;
+ 398   1          while (!(SPSR & SET_BIT7))
+ 399   1              ;
+ 400   1          clr_SPIF;
+ 401   1        //Send the content
+ 402   1              for (i = 0; i < 6; i++)
+ 403   1              {
+ 404   2                  SPDR = RF_cal2_data[i];
+ 405   2                  while (!(SPSR & SET_BIT7))
+ 406   2                      ;
+ 407   2                  clr_SPIF;
+ 408   2              }
+ 409   1           //Work is done,return to the idle state.
+ 410   1          SS = 1;
+ 411   1      }
+ 412          
+ 413          void config_DEM_CAL()
+ 414          {
+ 415   1          //Send through SPI...
+ 416   1          SS = 0;
+ 417   1          //Send the command sequentially according to the command-format.
+ 418   1          //Inform XN297L that the MCU wants to write the register 'DEM_CAL'
+ 419   1          SPDR = W_REGISTER + DEM_CAL;
+ 420   1          while (!(SPSR & SET_BIT7))
+ 421   1              ;
+ 422   1          clr_SPIF;
+ 423   1        //Send the content
+ 424   1                  SPDR = Dem_cal_data[0];
+ 425   1                  while (!(SPSR & SET_BIT7))
+ 426   1                      ;
+C51 COMPILER V9.01   XN297L                                                                02/08/2021 14:10:08 PAGE 8   
+
+ 427   1                  clr_SPIF;
+ 428   1      
+ 429   1           //Work is done,return to the idle state.
+ 430   1          SS = 1;
+ 431   1      }
+ 432          
+ 433          void config_DEM_CAL2()
+ 434          {
+ 435   1          int i;
+ 436   1          //Send through SPI...
+ 437   1          SS = 0;
+ 438   1          //Send the command sequentially according to the command-format.
+ 439   1          //Inform XN297L that the MCU wants to write the register 'DEM_CAL2'
+ 440   1          SPDR = W_REGISTER + DEM_CAL2;
+ 441   1          while (!(SPSR & SET_BIT7))
+ 442   1              ;
+ 443   1          clr_SPIF; 
+ 444   1        //Send the content
+ 445   1              for (i = 0; i < 3; i++)
+ 446   1              {
+ 447   2                  SPDR = Dem_cal2_data[i];
+ 448   2                  while (!(SPSR & SET_BIT7))
+ 449   2                      ;
+ 450   2                  clr_SPIF;
+ 451   2              }
+ 452   1           //Work is done,return to the idle state.
+ 453   1          SS = 1;
+ 454   1      }
+ 455          
+ 456          void XN297L_software_reset()
+ 457          {
+ 458   1          //Send cmd through SPI...
+ 459   1          SS = 0;
+ 460   1          SPDR = RST_FSPI;
+ 461   1          while (!(SPSR & SET_BIT7))
+ 462   1              ;
+ 463   1          clr_SPIF;
+ 464   1          //Send the content
+ 465   1          SPDR = 0x5a;
+ 466   1          while (!(SPSR & SET_BIT7))
+ 467   1              ;
+ 468   1          clr_SPIF;
+ 469   1          //Work is done,return to the idle state.
+ 470   1          SS = 1;
+ 471   1      }
+ 472          
+ 473          void XN297L_reset_release()
+ 474          {
+ 475   1        //Send cmd through SPI...
+ 476   1          SS = 0;
+ 477   1          SPDR = RST_FSPI;
+ 478   1          while (!(SPSR & SET_BIT7))
+ 479   1              ;
+ 480   1          clr_SPIF;
+ 481   1          //Send the content
+ 482   1          SPDR = 0xa5;
+ 483   1          while (!(SPSR & SET_BIT7))
+ 484   1              ;
+ 485   1          clr_SPIF;
+ 486   1          //Work is done,return to the idle state.
+ 487   1          SS = 1;
+ 488   1      }
+C51 COMPILER V9.01   XN297L                                                                02/08/2021 14:10:08 PAGE 9   
+
+ 489          
+ 490          
+ 491          void clear_STATUS_register()
+ 492          {       STATUS_mapping=RX_DR|TX_DS|MAX_RT;
+ 493   1         //Send through SPI...
+ 494   1          SS = 0;
+ 495   1          //Send the command sequentially according to the command-format.
+ 496   1          //Inform XN297L that the MCU wants to write the register 'STATUS'
+ 497   1          SPDR = W_REGISTER + STATUS;
+ 498   1          while (!(SPSR & SET_BIT7))
+ 499   1              ;
+ 500   1          clr_SPIF;
+ 501   1          //Send the content
+ 502   1          SPDR = STATUS_mapping;
+ 503   1          while (!(SPSR & SET_BIT7))
+ 504   1              ;
+ 505   1          clr_SPIF;
+ 506   1      
+ 507   1          //Work is done,return to the idle state.
+ 508   1          SS = 1;
+ 509   1      }
+ 510          
+ 511          /*---------------------------------------------------------*/
+ 512          //After the data receiving interrupt is generated,the interrupt flag
+ 513          //should be cleared in order to generate a new one.
+ 514          void clr_data_rcv_interrupt_flag()
+ 515          {
+ 516   1          STATUS_mapping |= RX_DR; //Write 1 to clear the interrupt.
+ 517   1      
+ 518   1          //Send through SPI...
+ 519   1          SS = 0;
+ 520   1          //Send the command sequentially according to the command-format.
+ 521   1          //Inform XN297L that the MCU wants to write the register 'STATUS'
+ 522   1          SPDR = W_REGISTER + STATUS;
+ 523   1          while (!(SPSR & SET_BIT7))
+ 524   1              ;
+ 525   1          clr_SPIF;
+ 526   1          //Send the content
+ 527   1          SPDR = STATUS_mapping;
+ 528   1          while (!(SPSR & SET_BIT7))
+ 529   1              ;
+ 530   1          clr_SPIF;
+ 531   1      
+ 532   1          //Work is done,return to the idle state.
+ 533   1          SS = 1;
+ 534   1      }
+ 535          
+ 536          void disable_pipe0_auto_ack()
+ 537          {
+ 538   1          //EN_AA_mapping=ENAA_P5|ENAA_P4|ENAA_P3|ENAA_P2|ENAA_P1|ENAA_P0;
+ 539   1          EN_AA_mapping=0;
+ 540   1        //Send through SPI...
+ 541   1          SS = 0;
+ 542   1          //Send the command sequentially according to the command-format.
+ 543   1          //Inform XN297L that the MCU wants to write the register 'EN_AA'
+ 544   1          SPDR = W_REGISTER + EN_AA;
+ 545   1          while (!(SPSR & SET_BIT7))
+ 546   1              ;
+ 547   1          clr_SPIF;
+ 548   1          //Send the content
+ 549   1          SPDR = EN_AA_mapping;
+ 550   1          while (!(SPSR & SET_BIT7))
+C51 COMPILER V9.01   XN297L                                                                02/08/2021 14:10:08 PAGE 10  
+
+ 551   1              ;
+ 552   1          clr_SPIF;
+ 553   1      
+ 554   1          //Work is done,return to the idle state.
+ 555   1          SS = 1;
+ 556   1      }
+ 557          
+ 558          
+ 559          void disable_auto_retransmit()
+ 560          {
+ 561   1          SETUP_RETR_mapping=ARD|ARC;
+ 562   1        //Send through SPI...
+ 563   1          SS = 0;
+ 564   1          //Send the command sequentially according to the command-format.
+ 565   1          //Inform XN297L that the MCU wants to write the register 'SETUP_RETR'
+ 566   1          SPDR = W_REGISTER + SETUP_RETR;
+ 567   1          while (!(SPSR & SET_BIT7))
+ 568   1              ;
+ 569   1          clr_SPIF;
+ 570   1          //Send the content
+ 571   1          SPDR = SETUP_RETR_mapping;
+ 572   1          while (!(SPSR & SET_BIT7))
+ 573   1              ;
+ 574   1          clr_SPIF;
+ 575   1      
+ 576   1          //Work is done,return to the idle state.
+ 577   1          SS = 1;
+ 578   1      }
+ 579          
+ 580          
+ 581          
+ 582          
+ 583          
+ 584          
+ 585          
+ 586          
+ 587          
+ 588          
+ 589          
+ 590          
+ 591          
+ 592          
+ 593          
+ 594          
+ 595          
+ 596          
+ 597          
+ 598          
+ 599          
+ 600          
+ 601          
+ 602          
+ 603          
+ 604          
+ 605          
+ 606          
+ 607          
+ 608          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    886    ----
+C51 COMPILER V9.01   XN297L                                                                02/08/2021 14:10:08 PAGE 11  
+
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     35       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
