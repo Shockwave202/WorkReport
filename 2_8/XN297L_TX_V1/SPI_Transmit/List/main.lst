@@ -1,0 +1,270 @@
+C51 COMPILER V9.01   MAIN                                                                  02/08/2021 13:45:37 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Output\main.obj
+COMPILER INVOKED BY: D:\keil\C51\BIN\C51.EXE Code\main.c BROWSE INCDIR(..\Include) DEFINE(FOSC_160000) DEBUG OBJECTEXTEN
+                    -D PRINT(.\List\main.lst) OBJECT(.\Output\main.obj)
+
+line level    source
+
+   1          
+   2          //Fcn description:
+   3          //Single Master,single slave architecture.
+   4          //Transmit data consecutively through MOSI pin, 
+   5          //SPIF will be set after completion of data transfer,
+   6          //clear SPIF and start a new transmission.
+   7          
+   8          #include "N76E003.h"//Definitions for SFRs and bits in SFRs 
+   9                              //which end their addresses as 0H or 8H. 
+  10          #include "SFR_Macro.h"//Setting and clring for each individual bit.
+  11          #include "Function_define.h"//Fcn definitions for the chip 
+  12          #include "Common.h"     //Fcn declarations for UART 
+  13          #include "Delay.h"//Fcn declarations for delay.
+  14          #include "XN297L.h"
+  15          
+  16          extern uint8_t rcv_result;//Store the received results.
+  17          //All the hardware registers in XN297L are mapped into the RAM of MCU,
+  18          //thus,modify the mapping register first,then send the content to
+  19          //XN297L through SPI.
+  20          extern uint8_t CONFIG_mapping;
+  21          extern uint8_t SETUP_AW_mapping;
+  22          extern uint8_t RF_CH_mapping;
+  23          extern uint8_t RF_SETUP_mapping;
+  24          extern uint8_t STATUS_mapping;
+  25          extern uint8_t TX_addr[5];
+  26          extern uint8_t RX_addr_P0[5];
+  27          extern uint8_t EN_AA_mapping;
+  28          extern uint8_t SETUP_RETR_mapping;
+  29          
+  30          
+  31          bit indicator;
+  32          uint8_t rf_tx_send_buf;
+  33          
+  34           void main(void)
+  35          {
+  36   1       Set_All_GPIO_Quasi_Mode;
+  37   1      
+  38   1              //The SPI operates as a Master:
+  39   1              //Pin configuration.
+  40   1      //    P15_Quasi_Mode; // P15 (SS) Quasi mode
+  41   1      //    P10_Quasi_Mode; // P10(SPCLK) Quasi mode
+  42   1      //    P00_Quasi_Mode; // P00 (MOSI) Quasi mode
+  43   1      //    P01_Quasi_Mode; // P01 (MISO) Quasi mode
+  44   1              
+  45   1      //Assign the default value to the RAM-mapped registers.
+  46   1      //These values are identical with the reset values of the reg. in XN297L.
+  47   1      CONFIG_mapping=EN_CRC;//Only CRC is enabled.
+  48   1      SETUP_AW_mapping=AW_5_BYTES;
+  49   1      RF_CH_mapping=0x4e;
+  50   1      RF_SETUP_mapping=0x3f;
+  51   1      STATUS_mapping=0x0e;    
+  52   1      EN_AA_mapping=1;
+  53   1      SETUP_RETR_mapping=0x03;
+  54   1      
+C51 COMPILER V9.01   MAIN                                                                  02/08/2021 13:45:37 PAGE 2   
+
+  55   1              // SPI in Master mode
+  56   1              set_MSTR;
+  57   1          
+  58   1      ///*****************************************************************************************
+  59   1      //* For SPI INIT setting 
+  60   1      //*****************************************************************************************/
+  61   1      //#define               SPICLK_DIV2                     clr_SPR0;clr_SPR1
+  62   1      //#define               SPICLK_DIV4                     set_SPR0;clr_SPR1
+  63   1      //#define               SPICLK_DIV8                     clr_SPR0;set_SPR1
+  64   1      //#define               SPICLK_DIV16            set_SPR0;set_SPR1       
+  65   1              SPICLK_DIV16;//SPI clk rate @1Mbps
+  66   1              
+  67   1              //Configure SS pin 
+  68   1              //SS input for mode fault detection.
+  69   1              //clr_DISMODF;
+  70   1              
+  71   1              // SS  as General purpose I/O
+  72   1          set_DISMODF;  
+  73   1          clr_SSOE;
+  74   1              
+  75   1          //Automatic SS output.
+  76   1              //set_DISMODF; 
+  77   1          //set_SSOE;
+  78   1      
+  79   1         //Set the data format and the clk format of SPI
+  80   1          //By default, SPI data is transferred MSB first
+  81   1           clr_LSBFE; 
+  82   1          //Set the idle state level of SPICLK 
+  83   1           clr_CPOL; // The SPI clock is low in idle mode
+  84   1               // The data is sample on the first edge of SPI clock
+  85   1           clr_CPHA; 
+  86   1      
+  87   1              clr_SPIF;
+  88   1           //Enable_SPI_Interrupt; 
+  89   1              // Enable SPI function
+  90   1          set_SPIEN;            
+  91   1              
+  92   1      //RF_TX Usage:
+  93   1      //After power on reset,it'll take 10MS until rf module switches into power-down mode,
+  94   1      //thus,at least 10MS delay is required before the initial procedure.
+  95   1      CE=0;//CE is only activated during transmission and receiving.
+  96   1      Timer3_Delay1ms(10);
+  97   1       XN297L_software_reset();
+  98   1       XN297L_reset_release();
+  99   1       flush_TX_FIFO();
+ 100   1      flush_RX_FIFO();
+ 101   1      //Clear interrupt flag.
+ 102   1      //clr_data_sent_interrupt_flag();
+ 103   1      clear_STATUS_register();
+ 104   1      //Open the receiving channel.
+ 105   1      //Use the default channel0. 
+ 106   1      //disable_pipe0_auto_ack();//For the receiver,
+ 107   1      disable_auto_retransmit();
+ 108   1      setup_address_witdth(AW_3_BYTES);//SETUP_AW
+ 109   1      set_TX_address(TX_addr);//TX_ADDR
+ 110   1      set_frequency_channel(2450);//RF_CH
+ 111   1      set_spi_data_rate(DR_1MBPS);
+ 112   1      set_rf_output_power(RF9DBM);//RF_SETUP
+ 113   1      config_DEM_CAL();
+ 114   1      config_RF_CAL2();
+ 115   1      config_DEM_CAL2();
+ 116   1      config_RF_CAL();
+C51 COMPILER V9.01   MAIN                                                                  02/08/2021 13:45:37 PAGE 3   
+
+ 117   1      config_BB_CAL();
+ 118   1      
+ 119   1      PWR_DN_mode_to_TX_mode();
+ 120   1      Timer3_Delay1ms(20);//Wait for stable 
+ 121   1      
+ 122   1      
+ 123   1      //Set P12 as falling edge triggered interrupt pin.
+ 124   1              Enable_INT_Port1;//Port1 is active as the 8-channel of pin interrupt.
+ 125   1          Enable_BIT2_FallEdge_Trig;
+ 126   1          PIF=0;   //Clr pin interrupt flag 
+ 127   1          //set_EPI; // Enable pin interrupt
+ 128   1                   //Standby,wait for the external signal.
+ 129   1      
+ 130   1         EA=1;
+ 131   1      
+ 132   1      CE = 1; ////The signal is active high and used to activate the chip in RX or TX mode
+ 133   1              //The crystal oscillator starts to output to other modules and
+ 134   1              //has strong drive capability.
+ 135   1      //Transmission procedure:
+ 136   1      Timer3_Delay1ms(1);//SPI Master device transmits data every 1m
+ 137   1               InitialUART0_Timer1(9600);
+ 138   1      
+ 139   1         while(1)
+ 140   1         {
+ 141   2      
+ 142   2      
+ 143   2      
+ 144   2      //read_single_byte_register(STATUS);
+ 145   2      //read_single_byte_register(CONFIG);
+ 146   2      // read_single_byte_register(RF_SETUP);
+ 147   2       //read_single_byte_register(FIFO_STATUS);
+ 148   2       //read_single_byte_register(EN_AA);       
+ 149   2       
+ 150   2      //Transmission procedure:
+ 151   2      Timer3_Delay1ms(1000);//SPI Master device transmits data every 1ms 
+ 152   2       
+ 153   2       rf_tx_send_buf++;
+ 154   2      
+ 155   2      write_TX_payload(rf_tx_send_buf);
+ 156   2      Timer3_Delay1ms(3);
+ 157   2      //read_single_byte_register(STATUS);
+ 158   2      //read_single_byte_register(FIFO_STATUS);
+ 159   2      
+ 160   2       ////Check if the transmission is completed.
+ 161   2      do
+ 162   2      {
+ 163   3          read_single_byte_register(STATUS);
+ 164   3      } 
+ 165   2         while (!(rcv_result & TX_DS)); //Sit in a tight loop,wait for the data transmitted.
+ 166   2      
+ 167   2      flush_TX_FIFO();
+ 168   2      clear_STATUS_register();
+ 169   2      //CE = 0; //Disable crystal oscillator output for power saving.
+ 170   2      
+ 171   2      
+ 172   2       Send_Data_To_UART0(rf_tx_send_buf);
+ 173   2      
+ 174   2      
+ 175   2      
+ 176   2      
+ 177   2      //How to check if the transmission process is implemented?
+ 178   2      //An active low interrupt will generate on IRQ pin 
+C51 COMPILER V9.01   MAIN                                                                  02/08/2021 13:45:37 PAGE 4   
+
+ 179   2      //after data sent.
+ 180   2      // while (!(PIF&PIF2));//Check if an IRQ is generated.
+ 181   2      //    PIF &=~PIF2;                             //clear interrupt flag
+ 182   2      // //Clear the interrupt flag in XN297L
+ 183   2      //  clr_data_sent_interrupt_flag();
+ 184   2         }
+ 185   1      
+ 186   1      
+ 187   1      
+ 188   1      }//End of main()
+ 189          
+ 190          
+ 191          
+ 192          //void SPI_ISR(void) interrupt 9 // Vecotr @  0x4B
+ 193          //{
+ 194          //    clr_SPIF;
+ 195          //      SS=1;
+ 196          //   //Retransmit the data.
+ 197          //   //SPDR=0x55;
+ 198          //   
+ 199          //}
+ 200          
+ 201          
+ 202          
+ 203          
+ 204          
+ 205          
+ 206          
+ 207          
+ 208          
+ 209          
+ 210          
+ 211          
+ 212          
+ 213          
+ 214          
+ 215          
+ 216          
+ 217          
+ 218          
+ 219          
+ 220          
+ 221          
+ 222          
+ 223          
+ 224          
+ 225          
+ 226          
+ 227          
+ 228          
+ 229          
+ 230          
+ 231          
+ 232          
+ 233          
+ 234          
+ 235          
+ 236          
+ 237          
+ 238                  
+
+
+C51 COMPILER V9.01   MAIN                                                                  02/08/2021 13:45:37 PAGE 5   
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    242    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

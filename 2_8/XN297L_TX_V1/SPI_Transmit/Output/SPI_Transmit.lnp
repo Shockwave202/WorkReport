@@ -1,0 +1,7 @@
+".\Output\main.obj",
+".\Output\XN297L.obj",
+".\Output\Common.obj",
+".\Output\Delay.obj",
+".\Output\STARTUP.obj" 
+TO ".\Output\SPI_Transmit" 
+PRINT(".\List\SPI_Transmit.m51") RAMSIZE(256) 
